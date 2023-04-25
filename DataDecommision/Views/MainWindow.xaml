@@ -1,0 +1,28 @@
+﻿<Window x:Class="DataDecommision.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DataDecommision.Views" 
+        xmlns:ViewModels="clr-namespace:DataDecommision.ViewModels" d:DataContext="{d:DesignInstance Type=ViewModels:ViewModel}"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="600">
+    <Grid>
+        <Frame>
+            <Frame.Content>
+                <local:LoginPage d:DesignHeight="{Binding ElementName=MainWindow, Path=Height}"
+                             d:DesignWidth="{Binding ElementName=MainWindow, Path=Width}" />
+            </Frame.Content>
+        </Frame>
+        <Frame>
+            <Frame.Content>
+                <local:BulkItemPage d:DesignHeight="{Binding ElementName=MainWindow, Path=Height}"
+                             d:DesignWidth="{Binding ElementName=MainWindow, Path=Width}" />
+            </Frame.Content>
+        </Frame>
+        <DockPanel>
+            <Frame x:Name="_mainFrame" Content="{Binding CurrentPage}"/>
+            
+        </DockPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,14 @@
+﻿<Page x:Class="DataDecommision.Views.BulkItemPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DataDecommision.Views" 
+      xmlns:ViewModels="clr-namespace:DataDecommision.ViewModels" d:DataContext="{d:DesignInstance Type=ViewModels:BulkItemVM}"
+      mc:Ignorable="d" 
+      Title="BulkItemPage">
+
+    <Grid>
+        <!-- Add user interface elements and Command bindings here -->
+    </Grid>
+</Page>
