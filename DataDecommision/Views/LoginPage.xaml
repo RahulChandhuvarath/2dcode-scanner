@@ -3,9 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:DataDecommision" 
+      xmlns:local="clr-namespace:DataDecommision"  d:DataContext="{d:DesignInstance Type=local:LoginVM}"
       mc:Ignorable="d">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height=".2*"/>
@@ -31,30 +31,33 @@
                     <RowDefinition Height="0.25*"/>
                     <RowDefinition Height="0.6*"/>
                     <RowDefinition Height="0.4*"/>
-                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="0.15*"/>
                     <RowDefinition Height="0.4*"/>
-                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="0.15*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="User Login" VerticalAlignment="Center"  FontSize="16" FontWeight="Medium"  Foreground="DarkBlue" />
                 <Image Grid.Row="2"  Source="../Images/login.jpg"/>
-                
+
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="70,0,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="140" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" />
+                    <TextBox  x:Name="tbUsername" Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="140" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextUserName}"  />
                 </Grid>
+                <TextBlock Grid.Row="4"  HorizontalAlignment="Right" Margin="0,0,100,0"  TextWrapping="Wrap" Text="{Binding UserStatus}" VerticalAlignment="Center"  FontSize="12"  Foreground="Red" />
                 <Grid Grid.Row="5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="35*"/>
+                        <ColumnDefinition Width="9*"/>
+                        <ColumnDefinition Width="26*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="70,0,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left"   Height="25"  Width="140" VerticalAlignment="Center"  FontSize="15"    Foreground="Black" />
+                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Password" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+                    <PasswordBox Grid.Column="1" local:PasswordBoxHelper.BoundPassword="{Binding TextPassword, Mode=TwoWay}" HorizontalAlignment="Left"   Height="25"  Width="140" VerticalAlignment="Center"  FontSize="15"    Foreground="Black" Grid.ColumnSpan="2" />
                 </Grid>
+                <TextBlock Grid.Row="6" HorizontalAlignment="Right" Margin="0,0,100,0" TextWrapping="Wrap" Text="{Binding PassStatus}" VerticalAlignment="Center"  FontSize="12"  Foreground="Red" />
                 <Button  Grid.Row="7" Margin="0,20,65,0" Background="DarkGreen" Height="30" Width="120" FontSize="17" FontWeight="Bold" Foreground="White"   Content="LOGIN" Command="{Binding ButtonLoginClick}" HorizontalAlignment="right"   VerticalAlignment="Top">
                     <Button.Resources>
                         <Style TargetType="Border">
