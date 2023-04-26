@@ -12,9 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DataDecommision.ViewModels;
+using DataDecommision;
 
-namespace DataDecommision.Views
+
+namespace DataDecommision
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -25,7 +26,6 @@ namespace DataDecommision.Views
         {
             InitializeComponent();
             this.DataContext = new ViewModel();
-            
         }
     }
 }

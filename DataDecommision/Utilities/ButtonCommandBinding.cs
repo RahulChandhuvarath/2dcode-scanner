@@ -13,15 +13,15 @@ namespace DataDecommision
         private readonly Action handler;
         private bool isEnabled;
         public event EventHandler CanExecuteChanged;
-
+        private readonly Func<bool> _canExecute;
         /// <summary>
         /// Bind method to execute the handler
         /// </summary>
         /// <param name="handler"></param>
-        public ButtonCommandBinding(Action handler)
+        public ButtonCommandBinding(Action handler, Func<bool> canExecute = null)
         {
             this.handler = handler;
-
+            _canExecute = canExecute;
         }
 
         //Enable property
@@ -33,10 +33,7 @@ namespace DataDecommision
                 if(value != isEnabled)
                 {
                     isEnabled = value;
-                    if(CanExecuteChanged != null)
-                    {
-                        CanExecuteChanged(this, EventArgs.Empty);
-                    }
+                    CanExecuteChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -48,7 +45,7 @@ namespace DataDecommision
         /// <returns></returns>
         public bool CanExecute(object parameter)
         {
-            return isEnabled;
+            return _canExecute?.Invoke() ?? true;
         }
 
         //calls the repective method that registered with handler
@@ -56,6 +53,11 @@ namespace DataDecommision
         {
             //calls the repective method that registered with handler
             handler();
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -1,11 +1,14 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Input;
 
-namespace DataDecommision.ViewModels
+namespace DataDecommision
 {
     internal class BulkItemVM : INotifyPropertyChanged
     {
@@ -21,6 +24,31 @@ namespace DataDecommision.ViewModels
         }
         public BulkItemVM()
         {
+            SelectedDate = null;
         }
+
+        public ButtonCommandBinding ExpDateCLick { get; set; }
+
+    
+
+
+        private DateTime? _selectedDate;
+        public DateTime? SelectedDate
+        {
+            get { return _selectedDate; }
+            set
+            {
+                if (_selectedDate != value)
+                {
+                    _selectedDate = value;
+                    NotifyPropertyChanged(nameof(SelectedDate));
+                    //SelectedDateChangedCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+
+
+       
     }
 }

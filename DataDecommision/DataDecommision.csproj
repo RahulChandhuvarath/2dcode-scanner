@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>scanner.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -58,6 +61,7 @@
     <Compile Include="Utilities\ButtonCommandBinding.cs" />
     <Compile Include="ViewModels\BulkItemVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
+    <Compile Include="ViewModels\NavigationClass.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\BulkItemPage.xaml.cs">
       <DependentUpon>BulkItemPage.xaml</DependentUpon>
@@ -110,6 +114,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="scanner.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\login.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\scanner.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\scanner.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pill_bottle.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

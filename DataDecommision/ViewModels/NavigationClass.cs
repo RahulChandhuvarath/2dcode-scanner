@@ -10,7 +10,9 @@ using System.Windows.Controls;
 
 namespace DataDecommision
 {
-    internal class ViewModel : INotifyPropertyChanged
+  
+
+    public class NavigationService : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -22,16 +24,27 @@ namespace DataDecommision
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    
+        private static readonly NavigationService instance = new NavigationService();
 
-
-        public ViewModel() 
+        public static NavigationService Instance
         {
+            get { return instance; }
+        }
 
-           NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
-            navigationService.CurrentPage = new LoginPage();
+        private object currentPage;
+
+        public object CurrentPage
+        {
+            get { return currentPage; }
+            set { currentPage = value; NotifyPropertyChanged(nameof(CurrentPage)); }
+        }
+
+        public void Navigate(object page)
+        {
+            CurrentPage = page;
+            // Do the actual navigation here, for example:
+            // Application.Current.MainWindow.Content = page;
         }
     }
-
-
-    
 }
