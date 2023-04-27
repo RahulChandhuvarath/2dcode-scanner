@@ -48,8 +48,7 @@ namespace DataDecommision
 
         private static void OnBoundPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var passwordBox = d as PasswordBox;
-            if (passwordBox != null)
+            if (d is PasswordBox passwordBox)
             {
                 passwordBox.PasswordChanged -= PasswordBox_PasswordChanged;
                 passwordBox.PasswordChanged += PasswordBox_PasswordChanged;

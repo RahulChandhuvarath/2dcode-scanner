@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:DataDecommision"  d:DataContext="{d:DesignInstance Type=local:LoginVM}"
+      xmlns:local="clr-namespace:DataDecommision"
       mc:Ignorable="d">
 
     <Grid>
@@ -34,6 +34,8 @@
                     <RowDefinition Height="0.15*"/>
                     <RowDefinition Height="0.4*"/>
                     <RowDefinition Height="0.15*"/>
+                    <RowDefinition Height="0.4*"/>
+                    <RowDefinition Height="0.15*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="User Login" VerticalAlignment="Center"  FontSize="16" FontWeight="Medium"  Foreground="DarkBlue" />
@@ -50,15 +52,23 @@
                 <TextBlock Grid.Row="4"  HorizontalAlignment="Right" Margin="0,0,100,0"  TextWrapping="Wrap" Text="{Binding UserStatus}" VerticalAlignment="Center"  FontSize="12"  Foreground="Red" />
                 <Grid Grid.Row="5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="35*"/>
-                        <ColumnDefinition Width="9*"/>
-                        <ColumnDefinition Width="26*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Password" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+                    <TextBlock HorizontalAlignment="Left"  Margin="70,0,0,0"  TextWrapping="Wrap" Text="Password" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
                     <PasswordBox Grid.Column="1" local:PasswordBoxHelper.BoundPassword="{Binding TextPassword, Mode=TwoWay}" HorizontalAlignment="Left"   Height="25"  Width="140" VerticalAlignment="Center"  FontSize="15"    Foreground="Black" Grid.ColumnSpan="2" />
                 </Grid>
                 <TextBlock Grid.Row="6" HorizontalAlignment="Right" Margin="0,0,100,0" TextWrapping="Wrap" Text="{Binding PassStatus}" VerticalAlignment="Center"  FontSize="12"  Foreground="Red" />
-                <Button  Grid.Row="7" Margin="0,20,65,0" Background="DarkGreen" Height="30" Width="120" FontSize="17" FontWeight="Bold" Foreground="White"   Content="LOGIN" Command="{Binding ButtonLoginClick}" HorizontalAlignment="right"   VerticalAlignment="Top">
+                <Grid Grid.Row="7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock HorizontalAlignment="Left"  Margin="70,0,0,0" TextWrapping="Wrap" Text="Active Port" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+                    <ComboBox Grid.Column="1"  IsEditable="False" SelectedValue="{Binding SelectedPort}" ItemsSource="{Binding AllPorts}" HorizontalAlignment="Left"   Height="25"  Width="190" VerticalAlignment="Center"  FontSize="15"    Foreground="Black" />
+                </Grid>
+                <TextBlock Grid.Row="8" HorizontalAlignment="Right" Margin="0,0,100,0" TextWrapping="Wrap" Text="{Binding PortStatus}" VerticalAlignment="Center"  FontSize="12"  Foreground="Red" />
+                <Button  Grid.Row="9" Margin="0,20,65,0" Background="DarkGreen" Height="30" Width="120" FontSize="17" FontWeight="Bold" Foreground="White"   Content="LOGIN" Command="{Binding ButtonLoginClick}" HorizontalAlignment="right"   VerticalAlignment="Top">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10">

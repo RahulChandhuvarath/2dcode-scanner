@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO.Ports;
 using System.Linq;
 using System.Security;
 using System.Text;
@@ -23,6 +24,11 @@ namespace DataDecommision
         public LoginVM()
         {
             loginCredentials = Common.GetCredentials();
+            AllPorts = SerialPort.GetPortNames();
+            if (AllPorts.Count() > 0)
+                SelectedPort = AllPorts[0];
+            else
+                PortStatus = "No Active Ports Found!!";
             ButtonLoginClick = new ButtonCommandBinding(ButtonLogin)
             {
                 IsEnabled = true
@@ -49,6 +55,13 @@ namespace DataDecommision
             set { passStatus = value; NotifyPropertyChanged("PassStatus"); }
         }
 
+        private string portStatus;
+        public string PortStatus
+        {
+            get { return portStatus; }
+            set { portStatus = value; NotifyPropertyChanged("PortStatus"); }
+        }
+
         private string userStatus;
       
 
@@ -57,6 +70,21 @@ namespace DataDecommision
         {
             get { return textPassword; }
             set { textPassword = value; NotifyPropertyChanged("TextPassword"); }
+        }
+
+        private string selectedPort;
+        public string SelectedPort
+        {
+            get { return selectedPort; }
+            set { selectedPort = value; NotifyPropertyChanged("SelectedPort"); }
+        }
+
+
+        private string[] allPorts;
+        public string[] AllPorts
+        {
+            get { return allPorts; }
+            set { allPorts = value; NotifyPropertyChanged("AllPorts"); }
         }
 
         public ButtonCommandBinding ButtonLoginClick { get; set; }
@@ -84,8 +112,10 @@ namespace DataDecommision
             {
                 PassStatus = "";
             }
-        
+            if (SelectedPort == null || SelectedPort == "")
+                return;
 
+            ScannerDecoder.userSelectedPort = SelectedPort;
             NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
             navigationService.CurrentPage = new BulkItemPage();
         }
