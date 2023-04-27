@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -27,4 +28,51 @@ namespace DataDecommision
             this.DataContext = new BulkItemVM();
         }
     }
+
+
+
+    public static class LabelBlinkBehavior
+    {
+        public static bool GetIsBlinking(Label label)
+        {
+            return (bool)label.GetValue(IsBlinkingProperty);
+        }
+
+        public static void SetIsBlinking(Label label, bool value)
+        {
+            label.SetValue(IsBlinkingProperty, value);
+        }
+
+        public static readonly DependencyProperty IsBlinkingProperty =
+            DependencyProperty.RegisterAttached(
+                "IsBlinking", typeof(bool), typeof(LabelBlinkBehavior),
+                new UIPropertyMetadata(false, OnIsBlinkingChanged));
+
+        private static void OnIsBlinkingChanged(
+            DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(obj is Label label))
+                return;
+
+            bool isBlinking = (bool)e.NewValue;
+            if (isBlinking)
+            {
+                Storyboard storyboard = new Storyboard();
+                DoubleAnimation animation = new DoubleAnimation
+                {
+                    From = 0,
+                    To = 1,
+                    Duration = TimeSpan.FromSeconds(0.5),
+                    AutoReverse = true,
+                    RepeatBehavior = RepeatBehavior.Forever
+                };
+                Storyboard.SetTarget(animation, label);
+                Storyboard.SetTargetProperty(animation,
+                    new PropertyPath(UIElement.OpacityProperty));
+                storyboard.Children.Add(animation);
+                storyboard.Begin();
+            }
+        }
+    }
+
 }
