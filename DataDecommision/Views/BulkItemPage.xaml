@@ -73,6 +73,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="Bulk LOT" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
             <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextLot}"/>
+
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>

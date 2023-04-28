@@ -64,6 +64,7 @@
     <Compile Include="ViewModels\BulkItemVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\NavigationClass.cs" />
+    <Compile Include="ViewModels\OptionVM.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\BulkItemPage.xaml.cs">
       <DependentUpon>BulkItemPage.xaml</DependentUpon>
@@ -78,6 +79,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\OptionPage.xaml.cs">
+      <DependentUpon>OptionPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\BulkItemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -89,6 +93,10 @@
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OptionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\pill_bottle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\string.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
