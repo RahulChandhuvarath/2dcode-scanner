@@ -65,6 +65,7 @@
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\NavigationClass.cs" />
     <Compile Include="ViewModels\OptionVM.cs" />
+    <Compile Include="ViewModels\RepackingVM.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\BulkItemPage.xaml.cs">
       <DependentUpon>BulkItemPage.xaml</DependentUpon>
@@ -82,6 +83,9 @@
     <Compile Include="Views\OptionPage.xaml.cs">
       <DependentUpon>OptionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RePackingPage.xaml.cs">
+      <DependentUpon>RePackingPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\BulkItemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -95,6 +99,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\OptionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RePackingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,6 +153,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\string.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\repack.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

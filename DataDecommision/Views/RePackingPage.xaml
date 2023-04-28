@@ -1,0 +1,104 @@
+﻿<Page x:Class="DataDecommision.RePackingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DataDecommision"
+      mc:Ignorable="d" 
+      Title="RePackingPage">
+
+    <Page.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            </ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="MidnightBlue" TargetName="Border"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Margin="10,10,10,20" Source="../Images/repack.jpg"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="REPACKING DETAILS" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="DarkBlue" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="EXP (YYYY-MM-DD)" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+
+            <DatePicker  Grid.Column="1"  SelectedDate="{Binding SelectedDate}"  HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15" >
+                <DatePicker.Resources>
+                    <Style TargetType="{x:Type DatePickerTextBox}">
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <TextBox x:Name="PART_TextBox" Text="{Binding Path=SelectedDate, StringFormat='yyyy-MM-dd', RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DatePicker.Resources>
+            </DatePicker>
+
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="Bulk LOT" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextLot}"/>
+
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="GTIN" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}"/>
+        </Grid>
+     
+       
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button  Grid.Column="0"  Background="DarkGreen" Height="40" Width="140" FontSize="20" HorizontalAlignment="Center" Content="BACK"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" Command="{Binding ButtonBackClick}" />
+            <Button  Grid.Column="1"  Background="DarkGreen" Height="40" Width="140" FontSize="20" HorizontalAlignment="Center" Content="SCAN"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" Command="{Binding ButtonScanClick}" />
+            <Button  Grid.Column="2"  Background="DarkGreen" Height="40" Width="140" FontSize="20" HorizontalAlignment="Center" Content="NEXT"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" />
+        </Grid>
+        <Popup x:Name="LoadingPopup" IsOpen="{Binding ScaningPopup}"
+               Placement="Center" AllowsTransparency="True"
+               PlacementTarget="{Binding ElementName=LayoutRoot}">
+            <Label Content="Scan Now..." HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="25" FontWeight="Bold" Foreground="DarkGoldenrod" Background="Transparent" local:LabelBlinkBehavior.IsBlinking="True" />
+        </Popup>
+
+    </Grid>
+</Page>
