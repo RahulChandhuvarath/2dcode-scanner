@@ -28,7 +28,7 @@ namespace DataDecommision
         {
            
             NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
-            navigationService.CurrentPage = new BulkItemPage();
+            navigationService.CurrentPage = BulkItemPage.Instance;
         }
 
         public void ButtonCheck()

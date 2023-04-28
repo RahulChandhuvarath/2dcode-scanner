@@ -112,8 +112,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button  Grid.Column="0"  Background="DarkGreen" Height="40" Width="140" FontSize="20" HorizontalAlignment="Center" Content="SCAN"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" Command="{Binding ButtonLScanClick}" />
-            <Button  Grid.Column="1"  Background="DarkGreen" Height="40" Width="140" FontSize="20" HorizontalAlignment="Center" Content="NEXT"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" />
+            <Button  Grid.Column="0"  Background="DarkGreen" Height="40" Width="140" FontSize="20" HorizontalAlignment="Center" Content="SCAN"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" Command="{Binding ButtonScanClick}" />
+            <Button  Grid.Column="1"  Background="DarkGreen" Height="40" Width="140" FontSize="20" HorizontalAlignment="Center" Content="NEXT"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" Command="{Binding ButtonNextClick}"/>
         </Grid>
         <Popup x:Name="LoadingPopup" IsOpen="{Binding ScaningPopup}"
                Placement="Center" AllowsTransparency="True"

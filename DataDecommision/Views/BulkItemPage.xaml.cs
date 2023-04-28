@@ -23,11 +23,28 @@ namespace DataDecommision
     /// </summary>
     public partial class BulkItemPage : Page
     {
-        public BulkItemPage()
+       
+        private static BulkItemPage _instance;
+
+        private BulkItemPage()
         {
+
             InitializeComponent();
             this.DataContext = new BulkItemVM();
         }
+
+        public static BulkItemPage Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new BulkItemPage();
+                }
+                return _instance;
+            }
+        }
+    
     }
 
 

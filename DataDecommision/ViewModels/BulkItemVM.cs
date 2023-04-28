@@ -25,7 +25,11 @@ namespace DataDecommision
         public BulkItemVM()
         {
             SelectedDate = null;
-            ButtonLScanClick = new ButtonCommandBinding(ButtonScan)
+            ButtonScanClick = new ButtonCommandBinding(ButtonScan)
+            {
+                IsEnabled = true
+            };
+            ButtonNextClick = new ButtonCommandBinding(ButtonNext)
             {
                 IsEnabled = true
             };
@@ -47,7 +51,8 @@ namespace DataDecommision
             }
         }
 
-        public ButtonCommandBinding ButtonLScanClick { get; set; }
+        public ButtonCommandBinding ButtonScanClick { get; set; }
+        public ButtonCommandBinding ButtonNextClick { get; set; }
 
         private string textSerial;
         public string TextSerial
@@ -108,6 +113,12 @@ namespace DataDecommision
             });
             Mouse.OverrideCursor = null;
             ScaningPopup = false;
+        }
+        public void ButtonNext()
+        {
+
+            NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
+            navigationService.CurrentPage = new RePackingPage();
         }
 
 
