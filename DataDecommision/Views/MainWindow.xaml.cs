@@ -27,5 +27,15 @@ namespace DataDecommision
             InitializeComponent();
             this.DataContext = new ViewModel();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to Quit?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.No)
+            {
+                e.Cancel = true; // Cancel the window's closing event
+            }
+        }
     }
 }

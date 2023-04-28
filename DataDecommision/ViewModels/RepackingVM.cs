@@ -1,16 +1,15 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace DataDecommision
 {
-    internal class BulkItemVM : INotifyPropertyChanged
+    internal class RepackingVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -22,7 +21,7 @@ namespace DataDecommision
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public BulkItemVM()
+        public RepackingVM()
         {
             SelectedDate = null;
             ButtonScanClick = new ButtonCommandBinding(ButtonScan)
@@ -30,6 +29,11 @@ namespace DataDecommision
                 IsEnabled = true
             };
             ButtonNextClick = new ButtonCommandBinding(ButtonNext)
+            {
+                IsEnabled = true
+            };
+
+            ButtonBackClick = new ButtonCommandBinding(ButtonBack)
             {
                 IsEnabled = true
             };
@@ -55,17 +59,11 @@ namespace DataDecommision
                 }
             }
         }
-
+        public ButtonCommandBinding ButtonBackClick { get; set; }
         public ButtonCommandBinding ButtonScanClick { get; set; }
         public ButtonCommandBinding ButtonNextClick { get; set; }
 
-        private string textSerial;
-        public string TextSerial
-        {
-            get { return textSerial; }
-            set { textSerial = value; NotifyPropertyChanged("TextSerial"); }
-        }
-
+      
         private string textGtin;
         public string TextGtin
         {
@@ -100,7 +98,7 @@ namespace DataDecommision
 
             await Task.Run(() =>
             {
-               
+
                 var code = ScannerDecoder.ScanAndDecode();
                 TextGtin = code.Item1;
                 TextLot = code.Item2;
@@ -113,19 +111,25 @@ namespace DataDecommision
                 {
                     SelectedDate = null;
                 }
-                TextSerial = code.Item4;
-               
+
             });
             Mouse.OverrideCursor = null;
             ScaningPopup = false;
         }
-        public void ButtonNext()
+        public void ButtonBack()
         {
 
             NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
-            navigationService.CurrentPage = new RePackingPage();
+            navigationService.CurrentPage = BulkItemPage.Instance;
+        }
+        public void ButtonNext()
+        {
+
+            //NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
+            //navigationService.CurrentPage = new RePackingPage();
         }
 
 
     }
+
 }

@@ -117,7 +117,7 @@ namespace DataDecommision
 
             ScannerDecoder.userSelectedPort = SelectedPort;
             NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
-            navigationService.CurrentPage = new BulkItemPage();
+            navigationService.CurrentPage = new OptionPage();
         }
 
 
