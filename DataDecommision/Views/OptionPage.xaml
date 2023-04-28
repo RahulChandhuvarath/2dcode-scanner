@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:DataDecommision"
+      xmlns:local="clr-namespace:DataDecommision"  d:DataContext="{d:DesignInstance Type=local:OptionVM}"
       mc:Ignorable="d" 
       Title="OptionPage">
 
@@ -12,10 +12,10 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Background="White" Command="{Binding ButtonDecomClick}">
-            <StackPanel Orientation="Vertical">
-                <Image Source="../Images/pill_bottle.png" Width="300" Height="300" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="Decommising Bottle" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Grid.Column="0" Background="White" IsEnabled="True" Command="{Binding ButtonDecomClick}">
+            <StackPanel Orientation="Vertical" >
+                <Image Source="../Images/pill_bottle.png" Width="300" Height="300" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="Decommising Bottles" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
         <Button Grid.Column="1" Background="White" Command="{Binding ButtonCheckClick}">

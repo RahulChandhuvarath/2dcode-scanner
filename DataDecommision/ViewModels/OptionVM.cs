@@ -15,7 +15,7 @@ namespace DataDecommision
                 IsEnabled = true
             };
 
-            ButtonDecomClick = new ButtonCommandBinding(ButtonCheck)
+            ButtonCheckClick = new ButtonCommandBinding(ButtonCheck)
             {
                 IsEnabled = true
             };
@@ -34,8 +34,8 @@ namespace DataDecommision
         public void ButtonCheck()
         {
 
-            NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
-            navigationService.CurrentPage = new BulkItemPage();
+            //NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
+            //navigationService.CurrentPage = new BulkItemPage();
         }
     }
 }
