@@ -32,6 +32,7 @@ namespace DataDecommision
 
             InitializeComponent();
             this.DataContext = new BulkItemVM();
+            
         }
 
         public static BulkItemPage Instance
@@ -43,6 +44,23 @@ namespace DataDecommision
                     _instance = new BulkItemPage();
                 }
                 return _instance;
+            }
+        }
+
+        private void Expdate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var bulkItemVM = this.DataContext as BulkItemVM;
+            DateTime selectedDate;
+            if (DateTime.TryParseExact(expdate.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out selectedDate))
+            {
+                // The entered date is valid
+                bulkItemVM.SelectedDate = selectedDate;
+                bulkItemVM.IsDateValid = true;
+            }
+            else
+            {
+                // The entered date is invalid
+                bulkItemVM.IsDateValid = false;
             }
         }
 
@@ -63,6 +81,18 @@ namespace DataDecommision
         {
             // Define a regular expression pattern that matches alphanumeric characters
             Regex regex = new Regex("^[0-9]*$");
+
+            // Test the input against the regular expression pattern
+            if (!regex.IsMatch(e.Text))
+            {
+                // If the input doesn't match, mark the event as handled to prevent it from being entered
+                e.Handled = true;
+            }
+        }
+        private void PreviewTextInput3(object sender, TextCompositionEventArgs e)
+        {
+            // Define a regular expression pattern that matches alphanumeric characters
+            Regex regex = new Regex("^[0-9-]*$");
 
             // Test the input against the regular expression pattern
             if (!regex.IsMatch(e.Text))

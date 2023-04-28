@@ -50,13 +50,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="EXP (YYYY-MM-DD)" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
 
-            <DatePicker  Grid.Column="1"  SelectedDate="{Binding SelectedDate}"  HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15" >
+            <DatePicker  Grid.Column="1"  x:Name="expdate" SelectedDateChanged="Expdate_SelectedDateChanged" SelectedDate="{Binding SelectedDate}"  HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15" >
                 <DatePicker.Resources>
                     <Style TargetType="{x:Type DatePickerTextBox}">
                         <Setter Property="Control.Template">
                             <Setter.Value>
                                 <ControlTemplate>
-                                    <TextBox x:Name="PART_TextBox" Text="{Binding Path=SelectedDate, StringFormat='yyyy-MM-dd', RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                    <TextBox x:Name="PART_TextBox" PreviewTextInput="PreviewTextInput3" Text="{Binding Path=SelectedDate, StringFormat='yyyy-MM-dd', RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
@@ -71,7 +71,7 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="Bulk LOT" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextLot}"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextLot}" PreviewTextInput="PreviewTextInput1"/>
 
         </Grid>
         <Grid Grid.Row="3">
@@ -80,7 +80,7 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="GTIN" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}" PreviewTextInput="PreviewTextInput1"/>
         </Grid>
      
        

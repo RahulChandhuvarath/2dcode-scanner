@@ -39,7 +39,12 @@ namespace DataDecommision
             };
         }
 
-
+        private bool _isDateValid;
+        public bool IsDateValid
+        {
+            get { return _isDateValid; }
+            set { _isDateValid = value; NotifyPropertyChanged(nameof(IsDateValid)); }
+        }
 
         private DateTime? _selectedDate;
         public DateTime? SelectedDate
