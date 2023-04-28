@@ -72,7 +72,7 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="Bulk LOT" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextLot}"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextLot}" PreviewTextInput="PreviewTextInput1"/>
 
         </Grid>
         <Grid Grid.Row="3">
@@ -81,7 +81,7 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="GTIN" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}" PreviewTextInput="PreviewTextInput1"/>
         </Grid>
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
@@ -89,7 +89,7 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="Serial Number" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextSerial}"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextSerial}" PreviewTextInput="PreviewTextInput1"/>
         </Grid>
         <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
@@ -97,7 +97,7 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="Total Bottles" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" />
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" PreviewTextInput="PreviewTextInput2" />
         </Grid>
         <Grid Grid.Row="6">
             <Grid.ColumnDefinitions>
@@ -105,7 +105,7 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="Bottles/Case" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" />
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black"  PreviewTextInput="PreviewTextInput2"/>
         </Grid>
         <Grid Grid.Row="7">
             <Grid.ColumnDefinitions>
