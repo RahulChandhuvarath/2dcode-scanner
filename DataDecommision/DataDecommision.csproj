@@ -66,6 +66,8 @@
     <Compile Include="ViewModels\NavigationClass.cs" />
     <Compile Include="ViewModels\OptionVM.cs" />
     <Compile Include="ViewModels\RepackingVM.cs" />
+    <Compile Include="ViewModels\ScanDisplayVM.cs" />
+    <Compile Include="ViewModels\ScanningVM.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\BulkItemPage.xaml.cs">
       <DependentUpon>BulkItemPage.xaml</DependentUpon>
@@ -86,6 +88,12 @@
     <Compile Include="Views\RePackingPage.xaml.cs">
       <DependentUpon>RePackingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ScanDisplayPage.xaml.cs">
+      <DependentUpon>ScanDisplayPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScanningPage.xaml.cs">
+      <DependentUpon>ScanningPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\BulkItemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -103,6 +111,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RePackingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScanDisplayPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScanningPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

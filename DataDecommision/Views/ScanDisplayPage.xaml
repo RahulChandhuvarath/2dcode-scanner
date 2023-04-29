@@ -1,0 +1,133 @@
+﻿<Page x:Class="DataDecommision.ScanDisplayPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DataDecommision" d:DataContext="{d:DesignInstance Type=local:ScanDisplayVM}"
+      mc:Ignorable="d" 
+      Title="ScanDisplayPage">
+    <Page.Resources>
+        <local:DivideByConverter x:Key="DivideByConverter" />
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            </ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="MidnightBlue" TargetName="Border"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height=".5*"/>
+                <RowDefinition Height=".5*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.5*"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Margin="10,10,10,10" Source="../Images/pill_bottle.png"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="Total Bottles       :" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="15" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
+                <Label Grid.Column="1" Content="40" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="20" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="Bottles Scanned :" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="15" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
+                <Label Grid.Column="1" Content="2" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="20" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
+            </Grid>
+            <Button  Grid.Row="3" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20"  Content="START SCAN"  FontWeight="Bold" Foreground="White"  Command="{Binding ButtonScanClick}" />
+            <Button  Grid.Row="4" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="DELETE"  FontWeight="Bold" Foreground="White"    />
+            <Button  Grid.Row="5" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="MANUAL ADD"  FontWeight="Bold" Foreground="White"    />
+            <Button  Grid.Row="7" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White"   />
+        </Grid>
+        <ListView  Grid.Column="1" ItemsSource="{Binding LstScanData, Mode=TwoWay, NotifyOnSourceUpdated=True}" Padding="0" Margin="0" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Width="100">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <Label FontWeight="Bold" Content="Exp Date" HorizontalContentAlignment="Center"  />
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock  Margin="10,0,0,0" Text="{Binding Expdate,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="140">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <Label FontWeight="Bold" Content="Bulk Lot" HorizontalContentAlignment="Center"  />
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="10,0,0,0" Text="{Binding LotNumber,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="140">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <Label FontWeight="Bold" Content="GTIN" HorizontalContentAlignment="Center"  />
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate >
+                                    <Grid>
+                                        <TextBlock Margin="10,0,0,0" Text="{Binding GTIN,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="140">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <Label FontWeight="Bold" Content="Serial" HorizontalContentAlignment="Center"  />
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Margin="10,0,0,0" Text="{Binding SerialNumber,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                       
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

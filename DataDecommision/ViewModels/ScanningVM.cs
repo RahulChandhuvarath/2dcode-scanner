@@ -4,13 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace DataDecommision
 {
-    internal class RepackingVM : INotifyPropertyChanged
+    internal class ScanningVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -22,19 +20,22 @@ namespace DataDecommision
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public RepackingVM()
+        public ScanningVM()
         {
             SelectedDate = null;
             ButtonScanClick = new ButtonCommandBinding(ButtonScan)
             {
                 IsEnabled = true
             };
-            ButtonNextClick = new ButtonCommandBinding(ButtonNext)
+            ButtonAddClick = new ButtonCommandBinding(ButtonAdd)
             {
                 IsEnabled = true
             };
-
-            ButtonBackClick = new ButtonCommandBinding(ButtonBack)
+            ButtonDisplayClick = new ButtonCommandBinding(ButtonDisplay)
+            {
+                IsEnabled = true
+            };
+            ButtonFinishClick = new ButtonCommandBinding(ButtonFinish)
             {
                 IsEnabled = true
             };
@@ -60,11 +61,21 @@ namespace DataDecommision
                 }
             }
         }
-        public ButtonCommandBinding ButtonBackClick { get; set; }
-        public ButtonCommandBinding ButtonScanClick { get; set; }
-        public ButtonCommandBinding ButtonNextClick { get; set; }
 
-      
+        public ButtonCommandBinding ButtonScanClick { get; set; }
+        public ButtonCommandBinding ButtonAddClick { get; set; }
+
+        public ButtonCommandBinding ButtonDisplayClick { get; set; }
+
+        public ButtonCommandBinding ButtonFinishClick { get; set; }
+
+        private string textSerial;
+        public string TextSerial
+        {
+            get { return textSerial; }
+            set { textSerial = value; NotifyPropertyChanged("TextSerial"); }
+        }
+
         private string textGtin;
         public string TextGtin
         {
@@ -112,30 +123,23 @@ namespace DataDecommision
                 {
                     SelectedDate = null;
                 }
+                TextSerial = code.Item4;
 
             });
             Mouse.OverrideCursor = null;
             ScaningPopup = false;
         }
-        public void ButtonBack()
+        public void ButtonAdd()
         {
 
-            NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
-            navigationService.CurrentPage = BulkItemPage.Instance;
         }
-        public void ButtonNext()
+        public void ButtonDisplay()
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to proceed to Scanning Page and \nSave all Data Entered?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (result == MessageBoxResult.No)
-            {
-               
-            }
-            else
-            {
-                NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
-                navigationService.CurrentPage = new ScanDisplayPage();
-            }
+        }
+        public void ButtonFinish()
+        {
+
         }
 
 
