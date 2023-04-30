@@ -62,6 +62,7 @@
     <Compile Include="Utilities\Common.cs" />
     <Compile Include="Utilities\ScannerDecoder.cs" />
     <Compile Include="ViewModels\BulkItemVM.cs" />
+    <Compile Include="ViewModels\CheckStringVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\NavigationClass.cs" />
     <Compile Include="ViewModels\OptionVM.cs" />
@@ -71,6 +72,9 @@
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\BulkItemPage.xaml.cs">
       <DependentUpon>BulkItemPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CheckStringPage.xaml.cs">
+      <DependentUpon>CheckStringPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -95,6 +99,10 @@
       <DependentUpon>ScanningPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\BulkItemPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CheckStringPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
