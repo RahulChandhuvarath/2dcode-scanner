@@ -57,6 +57,11 @@ namespace DataDecommision
                 IsEnabled = true
             };
 
+            ButtonDeleteClick = new ButtonCommandBinding(ButtonDelete)
+            {
+                IsEnabled = true
+            };
+
             List<ScanData> lstsd = new List<ScanData>();
             ScanData sd1 = new ScanData("2025-03-03", "A1234", "12345", "B1234");
             ScanData sd2 = new ScanData("2025-10-03", "D1234", "12345", "C1234");
@@ -178,6 +183,8 @@ namespace DataDecommision
         public ButtonCommandBinding ButtonDisplayClick { get; set; }
 
         public ButtonCommandBinding ButtonAddClick { get; set; }
+
+        public ButtonCommandBinding ButtonDeleteClick { get; set; }
         public ButtonCommandBinding ButtonScanClick { get; set; }
 
         private ObservableCollection<ScanData> _lstScanData = new ObservableCollection<ScanData>();
@@ -190,6 +197,19 @@ namespace DataDecommision
                 ScannedBottleCount = _lstScanData.Count.ToString();
                 NotifyPropertyChanged("LstScanData");
             }
+        }
+
+        private List<ScanData> lstSelectedItems = null;
+        public List<ScanData> LstSelectedItems
+        {
+            get => lstSelectedItems;
+            set
+            {
+                lstSelectedItems = value;
+                
+                NotifyPropertyChanged("LstSelectedItems");
+            }
+
         }
         private DispatcherTimer _timer;
         public void ButtonScan()
@@ -237,6 +257,17 @@ namespace DataDecommision
                 IsScanGridVisible = true;
                 IsAddGridVisible = false;
             }
+        }
+
+        public void ButtonDelete()
+        {
+            foreach (var item in LstSelectedItems)
+            {
+                LstScanData.Remove(item);
+            }
+
+            LstScanData = new ObservableCollection<ScanData>(LstScanData);
+             //ScannedBottleCount = _lstScanData.Count.ToString();
         }
         private void Timer_Tick(object sender, EventArgs e)
         {

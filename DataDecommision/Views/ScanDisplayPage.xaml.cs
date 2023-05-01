@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,15 @@ namespace DataDecommision
         public ScanDisplayPage()
         {
             InitializeComponent();
-            this.DataContext = ScanDisplayVM.Instance; ;
+            this.DataContext = ScanDisplayVM.Instance;
+        }
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ListView listView)
+            {
+                var selectedItems = listView.SelectedItems.Cast<ScanData>().ToList();
+                ScanDisplayVM.Instance.LstSelectedItems = selectedItems;
+            }
         }
 
         private void Expdate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)

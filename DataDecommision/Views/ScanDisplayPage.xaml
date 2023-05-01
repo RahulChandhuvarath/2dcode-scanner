@@ -53,7 +53,7 @@
                     <RowDefinition Height="*"/>
                 <RowDefinition Height="1.5*"/>
                 </Grid.RowDefinitions>
-                <Button  Grid.Row="0" Margin="5,5,5,5" Background="DarkGreen"  FontSize="15" Content="DELETE"  FontWeight="Bold" Foreground="White"   />
+                <Button  Grid.Row="0" Margin="5,5,5,5" Background="DarkGreen"  FontSize="15" Content="DELETE"  FontWeight="Bold" Foreground="White" Command="{Binding ButtonDeleteClick}"  />
                 <Button  Grid.Row="1" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White"   />
             </Grid>
         </Grid>
@@ -73,7 +73,7 @@
                 <Image Grid.Column="0" Margin="10,10,10,20" Source="../Images/pill_bottle.png"/>
                 <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="SCANNED BOTTLES" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="DarkBlue" />
             </Grid>
-            <ListView Grid.Row="1" ItemsSource="{Binding LstScanData, Mode=TwoWay, NotifyOnSourceUpdated=True}" Padding="0" Margin="0" >
+            <ListView Grid.Row="1" ItemsSource="{Binding LstScanData, Mode=TwoWay, NotifyOnSourceUpdated=True}" Padding="0" Margin="0" SelectionMode="Multiple" SelectionChanged="OnSelectionChanged">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
