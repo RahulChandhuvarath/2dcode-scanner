@@ -71,9 +71,9 @@ namespace DataDecommision
 
             if (portNames.Count() >= 1)
             {
-                scannerPort = new SerialPort(portNames[0], 9600, Parity.None, 8, StopBits.One);
+                scannerPort = new SerialPort(portNames[0], 115200);
                 scannerPort.Handshake = Handshake.RequestToSend;
-                scannerPort.Encoding = Encoding.UTF8;
+                //scannerPort.Encoding = Encoding.UTF8;
                 try
                 {
                     scannerPort.Open();
