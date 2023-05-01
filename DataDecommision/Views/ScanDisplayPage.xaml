@@ -7,6 +7,8 @@
       mc:Ignorable="d" 
       Title="ScanDisplayPage">
     <Page.Resources>
+        <local:SerialNumberConverter x:Key="SerialNumberConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <local:DivideByConverter x:Key="DivideByConverter" />
         <Style TargetType="{x:Type Button}">
             <Setter Property="Template">
@@ -26,7 +28,7 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <Grid>
+    <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="3*"/>
@@ -34,100 +36,222 @@
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height=".5*"/>
-                <RowDefinition Height=".5*"/>
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="2.5*"/>
             </Grid.RowDefinitions>
-            <Image Grid.Row="0" Margin="10,10,10,10" Source="../Images/pill_bottle.png"/>
+            <Button  Grid.Row="1" Margin="5,5,5,5"  Background="{Binding ButtonBackgroundColor}"  FontSize="20"  Content="START SCAN"  FontWeight="Bold" Foreground="White"  Command="{Binding ButtonScanClick}"  />
+            <Button  Grid.Row="3" Margin="5,5,5,5" Background="DarkGreen"  FontSize="15" Content="DISPLAY &#x0a;(On/Off)"  FontWeight="Bold" Foreground="White"  Command="{Binding ButtonDisplayClick}"/>
+
+            <Button  Grid.Row="2" Margin="5,5,5,5" Background="DarkGreen"  FontSize="15" Content="ADD MANUALLY &#x0a;  (Open/Close)"  FontWeight="Bold" Foreground="White"  Command="{Binding ButtonAddClick}"  />
+
+            <Button  Grid.Row="4" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White"   Visibility="{Binding IsAddGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Button  Grid.Row="4" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White"   Visibility="{Binding IsScanGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Grid Grid.Row="4"  Visibility="{Binding IsDisplayGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                <RowDefinition Height="1.5*"/>
+                </Grid.RowDefinitions>
+                <Button  Grid.Row="0" Margin="5,5,5,5" Background="DarkGreen"  FontSize="15" Content="DELETE"  FontWeight="Bold" Foreground="White" Command="{Binding ButtonDeleteClick}"  />
+                <Button  Grid.Row="1" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White"   />
+            </Grid>
+        </Grid>
+
+
+        <Grid Grid.Column="1"  Visibility="{Binding IsDisplayGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height="7*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Margin="10,10,10,20" Source="../Images/pill_bottle.png"/>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="SCANNED BOTTLES" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="DarkBlue" />
+            </Grid>
+            <ListView Grid.Row="1" ItemsSource="{Binding LstScanData, Mode=TwoWay, NotifyOnSourceUpdated=True}" Padding="0" Margin="0" SelectionMode="Multiple" SelectionChanged="OnSelectionChanged">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                            <GridViewColumn Width="25">
+                                <GridViewColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Label FontWeight="Bold" Content="#" HorizontalContentAlignment="Center"  />
+                                    </DataTemplate>
+                                </GridViewColumn.HeaderTemplate>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListViewItem}, Converter={StaticResource SerialNumberConverter}}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="80">
+                                    <GridViewColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <Label FontWeight="Bold" Content="Exp Date" HorizontalContentAlignment="Center"  />
+                                        </DataTemplate>
+                                    </GridViewColumn.HeaderTemplate>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Text="{Binding Expdate,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="130">
+                                    <GridViewColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <Label FontWeight="Bold" Content="Bulk Lot" HorizontalContentAlignment="Center"  />
+                                        </DataTemplate>
+                                    </GridViewColumn.HeaderTemplate>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding LotNumber,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="130">
+                                    <GridViewColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <Label FontWeight="Bold" Content="GTIN" HorizontalContentAlignment="Center"  />
+                                        </DataTemplate>
+                                    </GridViewColumn.HeaderTemplate>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate >
+                                            <Grid>
+                                                <TextBlock  Text="{Binding GTIN,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="130">
+                                    <GridViewColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <Label FontWeight="Bold" Content="Serial" HorizontalContentAlignment="Center"  />
+                                        </DataTemplate>
+                                    </GridViewColumn.HeaderTemplate>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <TextBlock  Text="{Binding SerialNumber,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            
+        </Grid>
+        <Grid Grid.Column="1"  Visibility="{Binding IsScanGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Margin="40,10,10,20" Source="../Images/pill_bottle.png"/>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin='30,0,0,0' TextWrapping="Wrap" Text="SCAN BOTTLES" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="DarkBlue" />
+            </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="1.7*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Content="Total Bottles       :" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="15" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
-                <Label Grid.Column="1" Content="40" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="20" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
+                <Label Grid.Column="0" Content="Total Bottles       :" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
+                <Label Grid.Column="1" Content="40" HorizontalAlignment="left" Margin="20,0,0,0" VerticalAlignment="Center"  FontSize="50" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="1.7*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Content="Bottles Scanned :" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="15" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
-                <Label Grid.Column="1" Content="2" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="20" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
+                <Label Grid.Column="0" Content="Scanned Bottles :" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
+                <Label Grid.Column="1" Content="{Binding ScannedBottleCount}" HorizontalAlignment="left"  Margin="20,0,0,0"  VerticalAlignment="Center"  FontSize="50" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
             </Grid>
-            <Button  Grid.Row="3" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20"  Content="START SCAN"  FontWeight="Bold" Foreground="White"  Command="{Binding ButtonScanClick}" />
-            <Button  Grid.Row="4" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="DELETE"  FontWeight="Bold" Foreground="White"    />
-            <Button  Grid.Row="5" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="MANUAL ADD"  FontWeight="Bold" Foreground="White"    />
-            <Button  Grid.Row="7" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White"   />
         </Grid>
-        <ListView  Grid.Column="1" ItemsSource="{Binding LstScanData, Mode=TwoWay, NotifyOnSourceUpdated=True}" Padding="0" Margin="0" >
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridView.Columns>
-                        <GridViewColumn Width="100">
-                            <GridViewColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <Label FontWeight="Bold" Content="Exp Date" HorizontalContentAlignment="Center"  />
-                                </DataTemplate>
-                            </GridViewColumn.HeaderTemplate>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock  Margin="10,0,0,0" Text="{Binding Expdate,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Width="140">
-                            <GridViewColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <Label FontWeight="Bold" Content="Bulk Lot" HorizontalContentAlignment="Center"  />
-                                </DataTemplate>
-                            </GridViewColumn.HeaderTemplate>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Margin="10,0,0,0" Text="{Binding LotNumber,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Width="140">
-                            <GridViewColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <Label FontWeight="Bold" Content="GTIN" HorizontalContentAlignment="Center"  />
-                                </DataTemplate>
-                            </GridViewColumn.HeaderTemplate>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate >
-                                    <Grid>
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding GTIN,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Width="140">
-                            <GridViewColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <Label FontWeight="Bold" Content="Serial" HorizontalContentAlignment="Center"  />
-                                </DataTemplate>
-                            </GridViewColumn.HeaderTemplate>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding SerialNumber,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                       
-                    </GridView.Columns>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid Grid.Column="1"  Visibility="{Binding IsAddGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.75*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Margin="40,10,10,20" Source="../Images/pill_bottle.png"/>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin='30,0,0,0' TextWrapping="Wrap" Text="ADD BOTTLES" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="DarkBlue" />
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="40,0,0,0" TextWrapping="Wrap" Text="EXP (YYYY-MM-DD)" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+
+                <DatePicker x:Name="expdate" Grid.Column="1"  SelectedDateChanged="Expdate_SelectedDateChanged" SelectedDate="{Binding SelectedDate}"  HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15" >
+                    <DatePicker.Resources>
+                        <Style TargetType="{x:Type DatePickerTextBox}">
+                            <Setter Property="Control.Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <TextBox x:Name="PART_TextBox" PreviewTextInput="PreviewTextInput3" Text="{Binding Path=SelectedDate, StringFormat='yyyy-MM-dd', RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DatePicker.Resources>
+                </DatePicker>
+
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="40,0,0,0" TextWrapping="Wrap" Text="Bulk LOT" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+                <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextLot}" PreviewTextInput="PreviewTextInput1"/>
+
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="40,0,0,0" TextWrapping="Wrap" Text="GTIN" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+                <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}" PreviewTextInput="PreviewTextInput1"/>
+            </Grid>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="40,0,0,0" TextWrapping="Wrap" Text="Serial Number" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+                <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextSerial}" PreviewTextInput="PreviewTextInput1"/>
+            </Grid>
+            <Button  Grid.Row="5"  Background="DarkGreen"  FontSize="20" Content="ADD"  FontWeight="Bold" Foreground="White" Height="50" Width="200"  />
+        </Grid>
+
     </Grid>
 </Page>
