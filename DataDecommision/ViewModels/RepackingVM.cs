@@ -133,6 +133,14 @@ namespace DataDecommision
             }
             else
             {
+                try
+                {
+                    DecomData.RepackExp = ((DateTime)SelectedDate).ToString("yyyy-MM-dd");
+                    DecomData.RepackLot = TextLot;
+                    DecomData.RepackGtin = TextGtin;
+                }
+                catch { }
+
                 NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
                 navigationService.CurrentPage = new ScanDisplayPage();
             }

@@ -69,7 +69,7 @@
                     <ComboBox Grid.Column="1"  IsEditable="False" SelectedValue="{Binding SelectedPort}" ItemsSource="{Binding AllPorts}" HorizontalAlignment="Left"   Height="25"  Width="190" VerticalAlignment="Center"  FontSize="15"    Foreground="Black" />
                 </Grid>
                 <TextBlock Grid.Row="8" HorizontalAlignment="Right" Margin="0,0,100,0" TextWrapping="Wrap" Text="{Binding PortStatus}" VerticalAlignment="Center"  FontSize="12"  Foreground="Red" />
-                <Button  Grid.Row="9" Margin="0,20,65,0" Background="DarkGreen" Height="30" Width="120" FontSize="17" FontWeight="Bold" Foreground="White"   Content="LOGIN" Command="{Binding ButtonLoginClick}" HorizontalAlignment="right"   VerticalAlignment="Top">
+                <Button  Grid.Row="9" Margin="0,20,55,0" Background="DarkGreen" Height="40" Width="140" FontSize="17" FontWeight="Bold" Foreground="White"   Content="LOGIN" Command="{Binding ButtonLoginClick}" HorizontalAlignment="right"   VerticalAlignment="Top">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10">

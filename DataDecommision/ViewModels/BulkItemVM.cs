@@ -73,6 +73,20 @@ namespace DataDecommision
             set { textGtin = value; NotifyPropertyChanged("TextGtin"); }
         }
 
+        private string textBottle;
+        public string TextBottle
+        {
+            get { return textBottle; }
+            set { textBottle = value; NotifyPropertyChanged("TextBottle"); }
+        }
+
+        private string textCase;
+        public string TextCase
+        {
+            get { return textCase; }
+            set { textCase = value; NotifyPropertyChanged("TextCase"); }
+        }
+
         private string textLot;
         public string TextLot
         {
@@ -121,6 +135,15 @@ namespace DataDecommision
         }
         public void ButtonNext()
         {
+            try
+            {
+                DecomData.BulkExp = ((DateTime)SelectedDate).ToString("yyyy-MM-dd");
+                DecomData.BulkLot = TextLot;
+                DecomData.BulkGtin = TextGtin;
+                DecomData.BulkBottle = TextBottle;
+                DecomData.BulkCase = TextCase;
+            }
+            catch { }
 
             NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
             navigationService.CurrentPage = new RePackingPage();
