@@ -155,9 +155,9 @@
         </Grid>
         <Grid Grid.Column="1"  Visibility="{Binding IsScanGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.4*"/>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="0.3*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
@@ -177,12 +177,10 @@
                 <Label Grid.Column="1" Content="40" HorizontalAlignment="left" Margin="20,0,0,0" VerticalAlignment="Center"  FontSize="50" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
             </Grid>
             <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.7*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Content="Scanned Bottles :" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
-                <Label Grid.Column="1" Content="{Binding ScannedBottleCount}" HorizontalAlignment="left"  Margin="20,0,0,0"  VerticalAlignment="Center"  FontSize="50" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
+                <Label Content="Scanned Bottles" HorizontalAlignment="Center" VerticalAlignment="Bottom"  FontSize="30" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
+           </Grid>
+            <Grid Grid.Row="3">
+                <Label Content="{Binding ScannedBottleCount}" HorizontalAlignment="Center"  VerticalAlignment="Top"  FontSize="160" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
             </Grid>
         </Grid>
         <Grid Grid.Column="1"  Visibility="{Binding IsAddGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}">

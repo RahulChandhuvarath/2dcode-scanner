@@ -71,8 +71,8 @@ namespace DataDecommision
 
             if (portNames.Count() >= 1)
             {
-                scannerPort = new SerialPort(portNames[0], 115200);
-                scannerPort.Handshake = Handshake.RequestToSend;
+                scannerPort = new SerialPort(portNames[0], 9600,Parity.None,8,StopBits.One);
+                scannerPort.Handshake = Handshake.None;
                 //scannerPort.Encoding = Encoding.UTF8;
                 try
                 {
@@ -357,12 +357,12 @@ namespace DataDecommision
             // read the data from the serial port buffer
             SerialPort scannerPort = (SerialPort)sender;
 
-            scantext = scannerPort.ReadExisting();
+            //scantext = scannerPort.ReadExisting();
 
 
-            //byte[] buffer = new byte[scannerPort.BytesToRead];
-            //scannerPort.Read(buffer, 0, buffer.Length);
-            //scantext = Encoding.ASCII.GetString(buffer);
+            byte[] buffer = new byte[scannerPort.BytesToRead];
+            scannerPort.Read(buffer, 0, buffer.Length);
+            scantext = Encoding.UTF8.GetString(buffer);
 
         }
 

@@ -275,21 +275,5 @@ namespace DataDecommision
         }
     }
    
-    public class ScanData
-    {
-        public ScanData(string strExp, string strLot, string strGtin, string strSerial)
-        {
-            Expdate = strExp;
-            LotNumber = strLot;
-            GTIN = strGtin;
-            SerialNumber = strSerial;
-
-        }
-
-        public string Expdate { get; set; }
-        public string LotNumber { get; set; }
-        public string GTIN { get; set; }
-        public string SerialNumber { get; set; }
-
-    }
+    
 }

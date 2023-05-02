@@ -29,10 +29,10 @@
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
+            <!--<RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>-->
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -44,13 +44,13 @@
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="CHECK STRING" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="DarkBlue" />
         </Grid>
    
-        <Grid Grid.Row="1">
+       <!-- <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="String" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="400" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextString}" PreviewTextInput="PreviewTextInput1"/>
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontWeight="Bold" Margin="60,0,0,0" TextWrapping="Wrap" Text="STRING" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+            <Label Grid.Column="1" HorizontalAlignment="Left" FontWeight="Bold" VerticalAlignment="Center"  FontSize="20"  Foreground="Black" Content="23874875817468655493675a81239gv"/>
 
         </Grid>
         <Grid Grid.Row="2">
@@ -58,25 +58,28 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="Length" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="50" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextLength}" PreviewTextInput="PreviewTextInput2"/>
-        </Grid>
-        <Grid Grid.Row="3">
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontWeight="Bold" Margin="60,0,0,0" TextWrapping="Wrap" Text="LENGTH" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+            <Label Grid.Column="1" HorizontalAlignment="Left" FontWeight="Bold" VerticalAlignment="Center"  FontSize="20"  Foreground="Black" Content="30"/>
+        </Grid>-->
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="RESULT" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <Label Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Content="{Binding TextResult}"/>
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" FontWeight="Bold"  TextWrapping="Wrap" Text="MATCHED" VerticalAlignment="Center"  FontSize="25"  Foreground="DarkBlue" />
+            <Label Grid.Column="1" HorizontalAlignment="Left" FontWeight="Bold" VerticalAlignment="Center"  FontSize="45"  Foreground="ForestGreen" Content="10"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" FontWeight="Bold"  TextWrapping="Wrap" Text="NOT MATCHED" VerticalAlignment="Center"  FontSize="25"  Foreground="DarkBlue" />
+            <Label Grid.Column="1" HorizontalAlignment="left" FontWeight="Bold" VerticalAlignment="Center"  FontSize="45"  Foreground="Red" Content="2"/>
         </Grid>
 
-        <Grid Grid.Row="4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button  Grid.Column="0"  Background="DarkGreen" Height="50" Width="180" FontSize="25" HorizontalAlignment="Center" Content="BACK"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" Command="{Binding ButtonBackClick}" />
-            <Button  Grid.Column="1"  Background="DarkGreen" Height="50" Width="180" FontSize="25" HorizontalAlignment="Center" Content="CHECK"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" Command="{Binding ButtonCheckClick}" />
+        <Grid Grid.Row="5">
+            <Button  Background="DarkGreen" Height="70" Width="350" FontSize="35" HorizontalAlignment="Center" Content="START SCAN"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" Command="{Binding ButtonCheckClick}" />
        </Grid>
 
     </Grid>
