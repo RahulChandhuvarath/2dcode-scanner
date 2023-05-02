@@ -7,6 +7,7 @@
       mc:Ignorable="d" 
       Title="ScanDisplayPage">
     <Page.Resources>
+
         <local:SerialNumberConverter x:Key="SerialNumberConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <local:DivideByConverter x:Key="DivideByConverter" />
@@ -46,15 +47,15 @@
 
             <Button  Grid.Row="2" Margin="5,5,5,5" Background="DarkGreen"  FontSize="15" Content="ADD MANUALLY &#x0a;  (Open/Close)"  FontWeight="Bold" Foreground="White"  Command="{Binding ButtonAddClick}"  />
 
-            <Button  Grid.Row="4" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White"   Visibility="{Binding IsAddGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <Button  Grid.Row="4" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White"   Visibility="{Binding IsScanGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Button  Grid.Row="4" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White"  Command="{Binding ButtonFinishClick}" Visibility="{Binding IsAddGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Button  Grid.Row="4" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White"  Command="{Binding ButtonFinishClick}" Visibility="{Binding IsScanGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <Grid Grid.Row="4"  Visibility="{Binding IsDisplayGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 <RowDefinition Height="1.5*"/>
                 </Grid.RowDefinitions>
                 <Button  Grid.Row="0" Margin="5,5,5,5" Background="DarkGreen"  FontSize="15" Content="DELETE"  FontWeight="Bold" Foreground="White" Command="{Binding ButtonDeleteClick}"  />
-                <Button  Grid.Row="1" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White"   />
+                <Button  Grid.Row="1" Margin="5,5,5,5" Background="DarkGreen"  FontSize="20" Content="FINISH"  FontWeight="Bold" Foreground="White" Command="{Binding ButtonFinishClick}"  />
             </Grid>
         </Grid>
 
@@ -172,15 +173,17 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1.7*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Content="Total Bottles       :" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
-                <Label Grid.Column="1" Content="40" HorizontalAlignment="left" Margin="20,0,0,0" VerticalAlignment="Center"  FontSize="50" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
+                <Label Grid.Column="0" Content="Total Bottles:" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
+                <TextBox Grid.Column="1" Text="40"  IsReadOnly="{Binding IsTextReadonly}"  Width="130" HorizontalAlignment="Center"  VerticalAlignment="Center"  FontSize="40" FontWeight="Bold" Foreground="DarkOliveGreen" Background="Transparent"  local:TextBoxFocusBehavior.Focus="{Binding IsTextFocus}"  />
+                <Button  Grid.Column="2"  Background="DarkGoldenrod" HorizontalAlignment="Left" FontSize="15" Content="MODIFY"  FontWeight="Bold" Foreground="White" Height="25" Width="70" Command="{Binding ButtonModifyClick}" />
             </Grid>
             <Grid Grid.Row="2">
                 <Label Content="Scanned Bottles" HorizontalAlignment="Center" VerticalAlignment="Bottom"  FontSize="30" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
            </Grid>
             <Grid Grid.Row="3">
-                <Label Content="{Binding ScannedBottleCount}" HorizontalAlignment="Center"  VerticalAlignment="Top"  FontSize="160" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
+                <Label Content="{Binding ScannedBottleCount}" HorizontalAlignment="Center"  VerticalAlignment="Top"  FontSize="170" FontWeight="Bold" Foreground="OrangeRed" Background="Transparent" />
             </Grid>
         </Grid>
         <Grid Grid.Column="1"  Visibility="{Binding IsAddGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -250,6 +253,81 @@
             </Grid>
             <Button  Grid.Row="5"  Background="DarkGreen"  FontSize="20" Content="ADD"  FontWeight="Bold" Foreground="White" Height="50" Width="200"  />
         </Grid>
+        <Popup x:Name="BottlePopup" IsOpen="{Binding BottlePopup}"
+               Placement="Center" AllowsTransparency="False"
+               PlacementTarget="{Binding ElementName=LayoutRoot}" Width="330" Height="100">
+            <Grid Background="Wheat">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" HorizontalAlignment="Right" TextWrapping="Wrap" Text="Total Bottles:" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+                    <TextBox Grid.Column="1" HorizontalAlignment="Center"  Height="25" Width="150" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button  Grid.Column="0" Background="DarkGreen" Height="30" Width="100" FontSize="15" HorizontalAlignment="Center" Content="CONFIRM"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Top" Command="{Binding ButtonConfirmClick}" />
+                    <Button  Grid.Column="1" Background="DarkGreen" Height="30" Width="100" FontSize="15" HorizontalAlignment="Center" Content="QUIT"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Top" Command="{Binding ButtonQuitClick}" />
+                </Grid>
+            </Grid>
+            
+        </Popup>
 
+        <Popup x:Name="PasswordPopup" IsOpen="{Binding PasswordPopup}"
+               Placement="Center" AllowsTransparency="False"
+               PlacementTarget="{Binding ElementName=LayoutRoot}" Width="330" Height="100">
+            <Grid Background="Wheat">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" HorizontalAlignment="Right" TextWrapping="Wrap" Text="Password :" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+                    <TextBox Grid.Column="1" HorizontalAlignment="Center"  Height="25" Width="150" VerticalAlignment="Center"  FontSize="15"  Foreground="Black"  />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button  Grid.Column="0" Background="DarkGreen" Height="30" Width="100" FontSize="15" HorizontalAlignment="Center" Content="CONFIRM"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Top" Command="{Binding ButtonPassConfirmClick}" />
+                    <Button  Grid.Column="1" Background="DarkGreen" Height="30" Width="100" FontSize="15" HorizontalAlignment="Center" Content="QUIT"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Top" Command="{Binding ButtonPassQuitClick}" />
+                </Grid>
+            </Grid>
+        </Popup>
+
+        <Popup x:Name="CustomerPopup" IsOpen="{Binding CustomerPopup}"
+               Placement="Center" AllowsTransparency="False"
+               PlacementTarget="{Binding ElementName=LayoutRoot}" Width="400" Height="100">
+            <Grid Background="Wheat">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="For which customer should this XML be generated?"  FontSize="17"  Foreground="DarkBlue" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button  Grid.Column="0" Background="DarkGreen" Height="30" Width="100" FontSize="15" HorizontalAlignment="Center" Content="AHP"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Top" Command="{Binding ButtonAPHClick}" />
+                    <Button  Grid.Column="1" Background="DarkGreen" Height="30" Width="100" FontSize="15" HorizontalAlignment="Center" Content="Normal"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Top" Command="{Binding ButtonOtherClick}" />
+                </Grid>
+            </Grid>
+        </Popup>
     </Grid>
 </Page>

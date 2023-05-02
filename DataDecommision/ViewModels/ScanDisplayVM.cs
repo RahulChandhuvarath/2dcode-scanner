@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -36,11 +37,34 @@ namespace DataDecommision
                 return _instance;
             }
         }
+
+        public ButtonCommandBinding ButtonDisplayClick { get; set; }
+
+        public ButtonCommandBinding ButtonAddClick { get; set; }
+
+        public ButtonCommandBinding ButtonDeleteClick { get; set; }
+        public ButtonCommandBinding ButtonScanClick { get; set; }
+
+        public ButtonCommandBinding ButtonFinishClick { get; set; }
+
+        public ButtonCommandBinding ButtonConfirmClick { get; set; }
+
+        public ButtonCommandBinding ButtonQuitClick { get; set; }
+
+        public ButtonCommandBinding ButtonPassConfirmClick { get; set; }
+
+        public ButtonCommandBinding ButtonPassQuitClick { get; set; }
+
+        public ButtonCommandBinding ButtonModifyClick { get; set; }
+
+        public ButtonCommandBinding ButtonAPHClick { get; set; }
+
+        public ButtonCommandBinding ButtonOtherClick { get; set; }
         private ScanDisplayVM()
         {
             SelectedDate = null;
             ButtonBackgroundColor = Brushes.DarkGreen;
-
+            IsTextReadonly = true;
             ButtonScanClick = new ButtonCommandBinding(ButtonScan)
             {
                 IsEnabled = true
@@ -61,6 +85,47 @@ namespace DataDecommision
             {
                 IsEnabled = true
             };
+
+            ButtonFinishClick = new ButtonCommandBinding(ButtonFinish)
+            {
+                IsEnabled = true
+            };
+
+            ButtonConfirmClick = new ButtonCommandBinding(ButtonConfirm)
+            {
+                IsEnabled = true
+            };
+
+            ButtonQuitClick = new ButtonCommandBinding(ButtonQuit)
+            {
+                IsEnabled = true
+            };
+
+            ButtonPassConfirmClick = new ButtonCommandBinding(ButtonPassConfirm)
+            {
+                IsEnabled = true
+            };
+
+            ButtonPassQuitClick = new ButtonCommandBinding(ButtonPassQuit)
+            {
+                IsEnabled = true
+            };
+
+            ButtonModifyClick = new ButtonCommandBinding(ButtonModify)
+            {
+                IsEnabled = true
+            };
+
+            ButtonAPHClick = new ButtonCommandBinding(ButtonAPH)
+            {
+                IsEnabled = true
+            };
+
+            ButtonOtherClick = new ButtonCommandBinding(ButtonOther)
+            {
+                IsEnabled = true
+            };
+
 
             List<ScanData> lstsd = new List<ScanData>();
             ScanData sd1 = new ScanData("2025-03-03", "A1234", "12345", "B1234");
@@ -170,6 +235,17 @@ namespace DataDecommision
             }
         }
 
+        private bool isTextReadonly;
+        public bool IsTextReadonly
+        {
+            get { return isTextReadonly; }
+            set
+            {
+                isTextReadonly = value;
+                NotifyPropertyChanged(nameof(IsTextReadonly));
+            }
+        }
+
         private bool isAddGridVisible;
         public bool IsAddGridVisible
         {
@@ -180,12 +256,7 @@ namespace DataDecommision
                 NotifyPropertyChanged(nameof(IsAddGridVisible));
             }
         }
-        public ButtonCommandBinding ButtonDisplayClick { get; set; }
-
-        public ButtonCommandBinding ButtonAddClick { get; set; }
-
-        public ButtonCommandBinding ButtonDeleteClick { get; set; }
-        public ButtonCommandBinding ButtonScanClick { get; set; }
+     
 
         private ObservableCollection<ScanData> _lstScanData = new ObservableCollection<ScanData>();
         public ObservableCollection<ScanData> LstScanData
@@ -258,9 +329,115 @@ namespace DataDecommision
                 IsAddGridVisible = false;
             }
         }
+        private bool isTextFocus;
+        public bool IsTextFocus
+        {
+            get { return isTextFocus; }
+            set { isTextFocus = value; NotifyPropertyChanged("IsTextFocus"); }
+        }
+
+        private bool bottlePopup;
+        public bool BottlePopup
+        {
+            get { return bottlePopup; }
+            set { bottlePopup = value; NotifyPropertyChanged("BottlePopup"); }
+        }
+
+        private bool passwordPopup;
+        public bool PasswordPopup
+        {
+            get { return passwordPopup; }
+            set { passwordPopup = value; NotifyPropertyChanged("PasswordPopup"); }
+        }
+
+        private bool customerPopup;
+        public bool CustomerPopup
+        {
+            get { return customerPopup; }
+            set { customerPopup = value; NotifyPropertyChanged("CustomerPopup"); }
+        }
+        public void ButtonFinish()
+        {
+            string match = "NOT Matching";
+            if (ScannedBottleCount != DecomData.BulkBottle)
+            {
+                string msg = "Total Bottles Scanned:" + ScannedBottleCount + "\nTotal Bottles Entered:" + DecomData.BulkBottle + "\nTotal Bottles are:" + match + "\nPlease confirm the total Bottles!";
+                MessageBoxResult result = MessageBox.Show(msg, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    BottlePopup = true;
+                    Application.Current.MainWindow.IsEnabled = false;
+                }
+            }
+            else
+            {
+                CustomerPopup = true;
+                Application.Current.MainWindow.IsEnabled = false;
+
+            }
+        }
+
+        public void ButtonConfirm()
+        {
+            BottlePopup = false;
+            Application.Current.MainWindow.IsEnabled = true;
+            PasswordPopup = true;
+            Application.Current.MainWindow.IsEnabled = false;
+            PasswordType = 0;
+        }
+        public void ButtonQuit()
+        {
+            BottlePopup = false;
+            Application.Current.MainWindow.IsEnabled = true;
+        }
+
+        private static int PasswordType = 0;
+        public void ButtonPassConfirm()
+        {
+            PasswordPopup = false;
+            Application.Current.MainWindow.IsEnabled = true;
+
+            if(PasswordType == 0)
+            {
+                CustomerPopup = true;
+                Application.Current.MainWindow.IsEnabled = false;
+            }
+        }
+        public void ButtonPassQuit()
+        {
+            PasswordPopup = false;
+            Application.Current.MainWindow.IsEnabled = true;
+        }
+
+        public void ButtonAPH()
+        {
+            CustomerPopup = false;
+            Application.Current.MainWindow.IsEnabled = true;
+            MessageBox.Show("XML file created succesfully!!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        public void ButtonOther()
+        {
+            CustomerPopup = false;
+            Application.Current.MainWindow.IsEnabled = true;
+            MessageBox.Show("XML file created succesfully!!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        public void ButtonModify()
+        {
+            IsTextReadonly = false;
+            IsTextFocus = true;
+            PasswordPopup = true;
+            Application.Current.MainWindow.IsEnabled = false;
+            PasswordType = 1;
+        }
 
         public void ButtonDelete()
         {
+            if (LstSelectedItems == null || LstSelectedItems.Count() == 0)
+                return;
+            PasswordPopup = true;
+            Application.Current.MainWindow.IsEnabled = false;
+            PasswordType = 2;
             foreach (var item in LstSelectedItems)
             {
                 LstScanData.Remove(item);

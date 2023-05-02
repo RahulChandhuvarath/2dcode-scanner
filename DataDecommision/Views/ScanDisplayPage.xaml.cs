@@ -27,6 +27,7 @@ namespace DataDecommision
         {
             InitializeComponent();
             this.DataContext = ScanDisplayVM.Instance;
+
         }
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -90,6 +91,31 @@ namespace DataDecommision
                 // If the input doesn't match, mark the event as handled to prevent it from being entered
                 e.Handled = true;
             }
+        }
+    }
+
+    public static class TextBoxFocusBehavior
+    {
+        public static readonly DependencyProperty FocusProperty =
+            DependencyProperty.RegisterAttached("Focus", typeof(bool), typeof(TextBoxFocusBehavior),
+                new PropertyMetadata(false, OnFocusChanged));
+
+        private static void OnFocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is TextBox textBox && (bool)e.NewValue)
+            {
+                textBox.Focus();
+            }
+        }
+
+        public static bool GetFocus(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(FocusProperty);
+        }
+
+        public static void SetFocus(DependencyObject obj, bool value)
+        {
+            obj.SetValue(FocusProperty, value);
         }
     }
 
