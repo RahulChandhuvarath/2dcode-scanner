@@ -116,7 +116,7 @@ namespace DataDecommision
         public static (string, string, string, string) DecodeString(string inputString)
         {
 
-            string pattern = "[^a-zA-Z0-9]+";
+            string pattern = "[^a-zA-Z0-9-]+";
             string value = Regex.Replace(inputString, pattern, "");
 
             string gtin = null, serialNumber = null, expirationDate = null, lotNumber = null;
@@ -227,7 +227,7 @@ namespace DataDecommision
         public static void ContinousDecodeString(string inputString)
         {
 
-            string pattern = "[^a-zA-Z0-9]+";
+            string pattern = "[^a-zA-Z0-9-]+";
             string value = Regex.Replace(inputString, pattern, "");
 
             string gtin = null, serialNumber = null, expirationDate = null, lotNumber = null;
@@ -340,17 +340,7 @@ namespace DataDecommision
           
         }
 
-     
-        // create a ManualResetEvent
-       // static readonly ManualResetEvent dataReceivedtemp = new ManualResetEvent(false);
-
-
-
-        // wait for the data to be received or for 30 seconds to elapse
-        //readonly bool dataReceivedOrTimeout = dataReceivedtemp.WaitOne(30000);
-
-
-       
+           
         static void OnDataReceived1(object sender, SerialDataReceivedEventArgs e)
         {
             //dataReceivedtemp.Set();
@@ -362,7 +352,7 @@ namespace DataDecommision
 
             byte[] buffer = new byte[scannerPort.BytesToRead];
             scannerPort.Read(buffer, 0, buffer.Length);
-            scantext = Encoding.UTF8.GetString(buffer);
+            scantext = Encoding.ASCII.GetString(buffer);
 
         }
 
@@ -371,12 +361,12 @@ namespace DataDecommision
             // read the data from the serial port buffer
             SerialPort scannerPort = (SerialPort)sender;
 
-            scantext = scannerPort.ReadExisting();
-
+            //scantext = scannerPort.ReadExisting();
+            byte[] buffer = new byte[scannerPort.BytesToRead];
+            scannerPort.Read(buffer, 0, buffer.Length);
+            scantext = Encoding.ASCII.GetString(buffer);
             ContinousDecodeString(scantext);
-            //byte[] buffer = new byte[scannerPort.BytesToRead];
-            //scannerPort.Read(buffer, 0, buffer.Length);
-            //scantext = Encoding.ASCII.GetString(buffer);
+
 
         }
 
