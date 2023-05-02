@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataDecommision" d:DataContext="{d:DesignInstance Type=local:ViewModel}"
         mc:Ignorable="d"
-        Title="Decommising Application" Height="500" Width="700"
+        Title="Decommising Application" Height="600" Width="800"
         Closing="Window_Closing">
     <Window.Resources>
         <local:NavigationService x:Key="NavigationService" />
