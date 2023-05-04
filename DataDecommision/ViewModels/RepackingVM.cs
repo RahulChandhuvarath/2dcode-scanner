@@ -125,6 +125,16 @@ namespace DataDecommision
         }
         public void ButtonNext()
         {
+            if (SelectedDate == null)
+            {
+                MessageBox.Show("Not a Valid Date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (TextLot == null || TextLot == "" || TextGtin == null || TextGtin == "")
+            {
+                MessageBox.Show("Input in some fileds are missing", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             MessageBoxResult result = MessageBox.Show("Are you sure you want to proceed to Scanning Page and \nSave all Data Entered?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.No)
