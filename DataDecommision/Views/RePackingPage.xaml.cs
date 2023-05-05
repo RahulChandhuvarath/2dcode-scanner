@@ -22,12 +22,23 @@ namespace DataDecommision
     /// </summary>
     public partial class RePackingPage : Page
     {
-        public RePackingPage()
+        private static RePackingPage _instance;
+        private RePackingPage()
         {
             InitializeComponent();
             this.DataContext = new RepackingVM();
         }
-
+        public static RePackingPage Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new RePackingPage();
+                }
+                return _instance;
+            }
+        }
         private void Expdate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             //var repackingVM = this.DataContext as RepackingVM;

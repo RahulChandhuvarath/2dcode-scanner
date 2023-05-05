@@ -156,7 +156,7 @@ namespace DataDecommision
             catch { }
 
             NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
-            navigationService.CurrentPage = new RePackingPage();
+            navigationService.CurrentPage = RePackingPage.Instance;
         }
 
 
