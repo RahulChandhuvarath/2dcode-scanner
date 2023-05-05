@@ -201,12 +201,26 @@ namespace DataDecommision
             set { textTotalBottle = value; NotifyPropertyChanged("TextTotalBottle"); }
         }
 
+        private string textConfirmBottle;
+        public string TextConfirmBottle
+        {
+            get { return textConfirmBottle; }
+            set { textConfirmBottle = value; NotifyPropertyChanged("TextConfirmBottle"); }
+        }
+
 
         private string textPassword;
         public string TextPassword
         {
             get { return textPassword; }
             set { textPassword = value; NotifyPropertyChanged("TextPassword"); }
+        }
+        
+        private string bottleStatus;
+        public string BottleStatus
+        {
+            get { return bottleStatus; }
+            set { bottleStatus = value; NotifyPropertyChanged("BottleStatus"); }
         }
 
         private string passStatus;
@@ -407,14 +421,24 @@ namespace DataDecommision
 
         public void ButtonConfirm()
         {
+           
+
+            if (TextConfirmBottle != scannedBottleCount)
+            {
+                BottleStatus = "Not Matching!!";
+                return;
+            }
+
             BottlePopup = false;
             Application.Current.MainWindow.IsEnabled = true;
+            BottleStatus = "";
             PasswordPopup = true;
             Application.Current.MainWindow.IsEnabled = false;
             PasswordType = 0;
         }
         public void ButtonQuit()
         {
+            BottleStatus = "";
             BottlePopup = false;
             Application.Current.MainWindow.IsEnabled = true;
         }
@@ -435,11 +459,13 @@ namespace DataDecommision
 
             if(PasswordType == 0) //Bottle Missmatch
             {
+                TextTotalBottle = TextConfirmBottle;
                 CustomerPopup = true;
                 Application.Current.MainWindow.IsEnabled = false;
             }
             else if(PasswordType == 1) //Modify Total Bottle
             {
+
                 IsTextReadonly = false;
                 IsTextFocus = true;
                 IsModifyVisible = false;
@@ -495,7 +521,10 @@ namespace DataDecommision
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            ScannerDecoder.FindBarcodeScanner(ScannerDecoder.userSelectedPort, true);
+            if(TextTotalBottle != scannedBottleCount)
+                ScannerDecoder.FindBarcodeScanner(ScannerDecoder.userSelectedPort, true);
+            if (TextTotalBottle == scannedBottleCount)
+                ButtonBackgroundColor = Brushes.DarkGreen;
         }
     }
    
