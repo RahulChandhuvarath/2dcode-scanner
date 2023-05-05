@@ -332,7 +332,9 @@ namespace DataDecommision
             }
             ScanData sd = new ScanData(expirationDate, lotNumber, gtin, serialNumber);
             List<ScanData> lstSD = new List<ScanData>(ScanDisplayVM.Instance.LstScanData);
-            lstSD.Add(sd);
+
+            if (!lstSD.Contains(sd))
+                lstSD.Add(sd);
             DispatchService.Invoke(() =>
             {
                 ScanDisplayVM.Instance.LstScanData = new System.Collections.ObjectModel.ObservableCollection<ScanData>(lstSD); ;

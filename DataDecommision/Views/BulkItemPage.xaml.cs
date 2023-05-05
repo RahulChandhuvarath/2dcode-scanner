@@ -47,27 +47,12 @@ namespace DataDecommision
             }
         }
 
-        private void Expdate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var bulkItemVM = this.DataContext as BulkItemVM;
-            DateTime selectedDate;
-            if (DateTime.TryParseExact(expdate.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out selectedDate))
-            {
-                // The entered date is valid
-                bulkItemVM.SelectedDate = selectedDate;
-                bulkItemVM.IsDateValid = true;
-            }
-            else
-            {
-                // The entered date is invalid
-                bulkItemVM.IsDateValid = false;
-            }
-        }
+     
 
         private void PreviewTextInput1(object sender, TextCompositionEventArgs e)
         {
             // Define a regular expression pattern that matches alphanumeric characters
-            Regex regex = new Regex("^[a-zA-Z0-9]*$");
+            Regex regex = new Regex("^[a-zA-Z0-9-]*$");
 
             // Test the input against the regular expression pattern
             if (!regex.IsMatch(e.Text))
@@ -91,17 +76,38 @@ namespace DataDecommision
         }
         private void PreviewTextInput3(object sender, TextCompositionEventArgs e)
         {
-            // Define a regular expression pattern that matches alphanumeric characters
-            Regex regex = new Regex("^[0-9-]*$");
 
-            // Test the input against the regular expression pattern
-            if (!regex.IsMatch(e.Text))
-            {
-                // If the input doesn't match, mark the event as handled to prevent it from being entered
+            //Define a regular expression pattern that matches alphanumeric characters
+           //Regex regex = new Regex("^[0-9-]*$");
+
+           // // Test the input against the regular expression pattern
+           // if (!regex.IsMatch(e.Text))
+           // {
+           //     //If the input doesn't match, mark the event as handled to prevent it from being entered
                 e.Handled = true;
-            }
+           // }
         }
 
+        private void Expdate_SelectedDateChanged(object sender, RoutedEventArgs e)
+        {
+            //var bulkItemVM = this.DataContext as BulkItemVM;
+            //DatePicker datePicker = sender as DatePicker;
+
+            //if (Validation.GetHasError(datePicker))
+            //{
+            //    // The entered date is invalid, display an error message
+            //    MessageBox.Show("Invalid date entered. Please enter a valid date.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            //    // Set the focus back to the DatePicker so the user can correct their input
+            //    datePicker.Focus();
+            //    bulkItemVM.IsDateValid = false;
+            //}
+            //else
+            //{
+            //    // The entered date is invalid
+            //    bulkItemVM.IsDateValid = true;
+            //}
+        }
     }
 
 

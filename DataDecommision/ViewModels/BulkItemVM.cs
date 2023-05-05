@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -135,18 +136,27 @@ namespace DataDecommision
         }
         public void ButtonNext()
         {
+            if(SelectedDate == null)
+            {
+                MessageBox.Show("Not a Valid Date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if(TextLot == null || TextLot == "" || TextGtin == null || TextGtin == ""|| TextBottle == null || TextBottle == "")
+            {
+                MessageBox.Show("Input in some fileds are missing", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             try
             {
                 DecomData.BulkExp = ((DateTime)SelectedDate).ToString("yyyy-MM-dd");
                 DecomData.BulkLot = TextLot;
                 DecomData.BulkGtin = TextGtin;
                 DecomData.BulkBottle = TextBottle;
-                DecomData.BulkCase = TextCase;
             }
             catch { }
 
             NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
-            navigationService.CurrentPage = new RePackingPage();
+            navigationService.CurrentPage = RePackingPage.Instance;
         }
 
 

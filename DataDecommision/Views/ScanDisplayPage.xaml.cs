@@ -29,6 +29,11 @@ namespace DataDecommision
             this.DataContext = ScanDisplayVM.Instance;
 
         }
+
+      
+
+
+
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is ListView listView)
@@ -40,19 +45,19 @@ namespace DataDecommision
 
         private void Expdate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            var scanDisplayVM = this.DataContext as ScanDisplayVM;
-            DateTime selectedDate;
-            if (DateTime.TryParseExact(expdate.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out selectedDate))
-            {
-                // The entered date is valid
-                scanDisplayVM.SelectedDate = selectedDate;
-                scanDisplayVM.IsDateValid = true;
-            }
-            else
-            {
-                // The entered date is invalid
-                scanDisplayVM.IsDateValid = false;
-            }
+            //var scanDisplayVM = this.DataContext as ScanDisplayVM;
+            //DateTime selectedDate;
+            //if (DateTime.TryParseExact(expdate.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out selectedDate))
+            //{
+            //    // The entered date is valid
+            //    scanDisplayVM.SelectedDate = selectedDate;
+            //    scanDisplayVM.IsDateValid = true;
+            //}
+            //else
+            //{
+            //    // The entered date is invalid
+            //    scanDisplayVM.IsDateValid = false;
+            //}
         }
 
         private void PreviewTextInput1(object sender, TextCompositionEventArgs e)
@@ -82,16 +87,18 @@ namespace DataDecommision
         }
         private void PreviewTextInput3(object sender, TextCompositionEventArgs e)
         {
-            // Define a regular expression pattern that matches alphanumeric characters
-            Regex regex = new Regex("^[0-9-]*$");
+            //// Define a regular expression pattern that matches alphanumeric characters
+            //Regex regex = new Regex("^[0-9-]*$");
 
-            // Test the input against the regular expression pattern
-            if (!regex.IsMatch(e.Text))
-            {
-                // If the input doesn't match, mark the event as handled to prevent it from being entered
-                e.Handled = true;
-            }
+            //// Test the input against the regular expression pattern
+            //if (!regex.IsMatch(e.Text))
+            //{
+            //    // If the input doesn't match, mark the event as handled to prevent it from being entered
+            e.Handled = true;
+            //}
         }
+
+       
     }
 
     public static class TextBoxFocusBehavior
