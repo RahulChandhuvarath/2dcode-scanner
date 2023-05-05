@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -65,6 +66,8 @@ namespace DataDecommision
             SelectedDate = null;
             ButtonBackgroundColor = Brushes.DarkGreen;
             IsTextReadonly = true;
+            TextTotalBottle = DecomData.BulkBottle;
+            IsModifyVisible = true;
             ButtonScanClick = new ButtonCommandBinding(ButtonScan)
             {
                 IsEnabled = true
@@ -128,11 +131,7 @@ namespace DataDecommision
 
 
             List<ScanData> lstsd = new List<ScanData>();
-            ScanData sd1 = new ScanData("2025-03-03", "A1234", "12345", "B1234");
-            ScanData sd2 = new ScanData("2025-10-03", "D1234", "12345", "C1234");
-            _lstScanData.Add(sd1);
-            _lstScanData.Add(sd2);
-            LstScanData = new ObservableCollection<ScanData>(_lstScanData);
+            LstScanData = new ObservableCollection<ScanData>(lstsd);
             IsDisplayGridVisible = false;
             IsScanGridVisible = true;
             IsAddGridVisible = false;
@@ -193,6 +192,34 @@ namespace DataDecommision
         {
             get { return textEXP; }
             set { textEXP = value; NotifyPropertyChanged("TextEXP"); }
+        }
+
+        private string textTotalBottle;
+        public string TextTotalBottle
+        {
+            get { return textTotalBottle; }
+            set { textTotalBottle = value; NotifyPropertyChanged("TextTotalBottle"); }
+        }
+
+
+        private string textPassword;
+        public string TextPassword
+        {
+            get { return textPassword; }
+            set { textPassword = value; NotifyPropertyChanged("TextPassword"); }
+        }
+
+        private string passStatus;
+        public string PassStatus
+        {
+            get { return passStatus; }
+            set { passStatus = value; NotifyPropertyChanged("PassStatus"); }
+        }
+        private bool isModifyVisible;
+        public bool IsModifyVisible
+        {
+            get { return isModifyVisible; }
+            set { isModifyVisible = value; NotifyPropertyChanged("IsModifyVisible"); }
         }
 
         private bool addPopup;
@@ -291,7 +318,7 @@ namespace DataDecommision
             IsScanGridVisible = true;
             IsAddGridVisible = false;
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(0.5); // set the timer interval to 30 seconds
+            _timer.Interval = TimeSpan.FromSeconds(1); // set the timer interval to 30 seconds
             _timer.Tick += Timer_Tick;
             _timer.Start();
 
@@ -359,9 +386,9 @@ namespace DataDecommision
         public void ButtonFinish()
         {
             string match = "NOT Matching";
-            if (ScannedBottleCount != DecomData.BulkBottle)
+            if (ScannedBottleCount != TextTotalBottle)
             {
-                string msg = "Total Bottles Scanned:" + ScannedBottleCount + "\nTotal Bottles Entered:" + DecomData.BulkBottle + "\nTotal Bottles are:" + match + "\nPlease confirm the total Bottles!";
+                string msg = "Total Bottles Scanned : " + ScannedBottleCount + "\n\nTotal Bottles Entered : " + TextTotalBottle + "\n\nTotal Bottles are " + match + "\nPlease confirm the total Bottles!";
                 MessageBoxResult result = MessageBox.Show(msg, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 if (result == MessageBoxResult.Yes)
@@ -395,17 +422,42 @@ namespace DataDecommision
         private static int PasswordType = 0;
         public void ButtonPassConfirm()
         {
+            if (TextPassword != DecomData.Password)
+            {
+                PassStatus = "Wrong Password!!";
+                return;
+            }
+            TextPassword = string.Empty;
+            PassStatus = "";
+
             PasswordPopup = false;
             Application.Current.MainWindow.IsEnabled = true;
 
-            if(PasswordType == 0)
+            if(PasswordType == 0) //Bottle Missmatch
             {
                 CustomerPopup = true;
                 Application.Current.MainWindow.IsEnabled = false;
             }
+            else if(PasswordType == 1) //Modify Total Bottle
+            {
+                IsTextReadonly = false;
+                IsTextFocus = true;
+                IsModifyVisible = false;
+            }
+            else if (PasswordType == 2) //Delete
+            {
+                foreach (var item in LstSelectedItems)
+                {
+                    LstScanData.Remove(item);
+                }
+
+                LstScanData = new ObservableCollection<ScanData>(LstScanData);
+            }
         }
         public void ButtonPassQuit()
         {
+            TextPassword = string.Empty;
+            PassStatus = "";
             PasswordPopup = false;
             Application.Current.MainWindow.IsEnabled = true;
         }
@@ -424,8 +476,7 @@ namespace DataDecommision
         }
         public void ButtonModify()
         {
-            IsTextReadonly = false;
-            IsTextFocus = true;
+          
             PasswordPopup = true;
             Application.Current.MainWindow.IsEnabled = false;
             PasswordType = 1;
@@ -435,16 +486,12 @@ namespace DataDecommision
         {
             if (LstSelectedItems == null || LstSelectedItems.Count() == 0)
                 return;
+
+            PasswordType = 2;
             PasswordPopup = true;
             Application.Current.MainWindow.IsEnabled = false;
-            PasswordType = 2;
-            foreach (var item in LstSelectedItems)
-            {
-                LstScanData.Remove(item);
-            }
-
-            LstScanData = new ObservableCollection<ScanData>(LstScanData);
-             //ScannedBottleCount = _lstScanData.Count.ToString();
+           
+           
         }
         private void Timer_Tick(object sender, EventArgs e)
         {

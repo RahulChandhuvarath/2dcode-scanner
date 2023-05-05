@@ -57,7 +57,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock HorizontalAlignment="Left"  Margin="70,0,0,0"  TextWrapping="Wrap" Text="Password" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-                    <PasswordBox Grid.Column="1" local:PasswordBoxHelper.BoundPassword="{Binding TextPassword, Mode=TwoWay}" HorizontalAlignment="Left"   Height="25"  Width="140" VerticalAlignment="Center"  FontSize="15"    Foreground="Black" Grid.ColumnSpan="2" />
+                    <PasswordBox Grid.Column="1" local:PasswordBoxHelper.Password="{Binding TextPassword, Mode=TwoWay}" HorizontalAlignment="Left"   Height="25"  Width="140" VerticalAlignment="Center"  FontSize="15"    Foreground="Black" Grid.ColumnSpan="2" />
                 </Grid>
                 <TextBlock Grid.Row="6" HorizontalAlignment="Right" Margin="0,0,100,0" TextWrapping="Wrap" Text="{Binding PassStatus}" VerticalAlignment="Center"  FontSize="12"  Foreground="Red" />
                 <Grid Grid.Row="7">
