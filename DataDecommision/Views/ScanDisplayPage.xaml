@@ -217,7 +217,7 @@
                             <Setter Property="Control.Template">
                                 <Setter.Value>
                                     <ControlTemplate>
-                                        <TextBox x:Name="PART_TextBox" PreviewTextInput="PreviewTextInput3" Text="{Binding Path=SelectedDate, StringFormat='yyyy-MM-dd', RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                        <TextBox x:Name="PART_TextBox" PreviewTextInput="PreviewTextInput3" IsReadOnly="True" Text="{Binding Path=SelectedDate, StringFormat='yyyy-MM-dd', RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
@@ -251,7 +251,7 @@
                 <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="40,0,0,0" TextWrapping="Wrap" Text="Serial Number" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
                 <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextSerial}" PreviewTextInput="PreviewTextInput1"/>
             </Grid>
-            <Button  Grid.Row="5"  Background="DarkGreen"  FontSize="20" Content="ADD"  FontWeight="Bold" Foreground="White" Height="50" Width="200"  />
+            <Button  Grid.Row="5"  Background="DarkGreen"  FontSize="20" Content="ADD"  FontWeight="Bold" Foreground="White" Height="50" Width="200" Command="{Binding ButtonMAddClick}"  />
         </Grid>
         <Popup x:Name="BottlePopup" IsOpen="{Binding BottlePopup}"
                Placement="Center" AllowsTransparency="False"
