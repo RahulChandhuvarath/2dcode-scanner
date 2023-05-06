@@ -43,6 +43,8 @@ namespace DataDecommision
 
         public ButtonCommandBinding ButtonAddClick { get; set; }
 
+        public ButtonCommandBinding ButtonMAddClick { get; set; }
+
         public ButtonCommandBinding ButtonDeleteClick { get; set; }
         public ButtonCommandBinding ButtonScanClick { get; set; }
 
@@ -80,6 +82,11 @@ namespace DataDecommision
             };
 
             ButtonAddClick = new ButtonCommandBinding(ButtonAdd)
+            {
+                IsEnabled = true
+            };
+
+            ButtonMAddClick = new ButtonCommandBinding(ButtonMAdd)
             {
                 IsEnabled = true
             };
@@ -370,6 +377,35 @@ namespace DataDecommision
                 IsAddGridVisible = false;
             }
         }
+
+        public void ButtonMAdd()
+        {
+            if (SelectedDate == null)
+            {
+                MessageBox.Show("Not a Valid Date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (TextLot == null || TextLot == "" || TextGtin == null || TextGtin == "" || TextSerial == null || TextSerial == "")
+            {
+                MessageBox.Show("Input in some fileds are missing", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            ScanData sd = new ScanData(((DateTime)SelectedDate).ToString("yyyy-MM-dd"), TextLot, TextGtin, TextSerial);
+            List<ScanData> lstSD = new List<ScanData>(ScanDisplayVM.Instance.LstScanData);
+            if (!lstSD.Contains(sd))
+                lstSD.Add(sd);
+            else
+            {
+                MessageBox.Show("Duplicate!!\n\nData already Added/Scanned.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            ScanDisplayVM.Instance.LstScanData = new System.Collections.ObjectModel.ObservableCollection<ScanData>(lstSD); ;
+
+        }
+
+
         private bool isTextFocus;
         public bool IsTextFocus
         {
