@@ -57,7 +57,7 @@ namespace DataDecommision
         /// Open all the serial ports and register the event
         /// </summary>
         /// <returns></returns>
-        public static SerialPort FindBarcodeScanner(string port, bool continous =false)
+        public static SerialPort FindBarcodeScanner(string port, int type =0)
         {
             // get a list of all available serial ports
             List<string> portNames = new List<string>
@@ -77,7 +77,7 @@ namespace DataDecommision
                 try
                 {
                     scannerPort.Open();
-                    if (continous)
+                    if (type == 1)
                     {
                         //Thread thread = new Thread(() =>
                         //{
@@ -86,6 +86,10 @@ namespace DataDecommision
                             //Thread.Sleep(50);
                         //});
                         //thread.Start();
+                    }
+                    else if(type == 2)
+                    {
+                        scannerPort.DataReceived += new SerialDataReceivedEventHandler(OnDataReceivedCheckConti);
                     }
                     else
                     {
@@ -371,6 +375,43 @@ namespace DataDecommision
             scantext = Encoding.ASCII.GetString(buffer);
             ContinousDecodeString(scantext);
 
+
+        }
+
+       
+
+        static void OnDataReceivedCheckConti(object sender, SerialDataReceivedEventArgs e)
+        {
+            // read the data from the serial port buffer
+            SerialPort scannerPort = (SerialPort)sender;
+
+            //scantext = scannerPort.ReadExisting();
+            byte[] buffer = new byte[scannerPort.BytesToRead];
+            scannerPort.Read(buffer, 0, buffer.Length);
+            scantext = Encoding.ASCII.GetString(buffer);
+            ContinousCheckString(scantext);
+        }
+
+        private static void ContinousCheckString(string inputString)
+        {
+            string pattern = "[^a-zA-Z0-9-]+";
+            inputString = Regex.Replace(inputString, pattern, "");
+            if (CheckStringVM.Instance.TextString == null || CheckStringVM.Instance.TextString == "")
+            {
+                CheckStringVM.Instance.TextString = inputString;
+                CheckStringVM.Instance.TextLength = inputString.Length.ToString();
+                return;
+            }
+
+            if((inputString.Substring(0, 3) == CheckStringVM.Instance.TextString.Substring(0, 3))
+                && inputString.Length == CheckStringVM.Instance.TextString.Length)
+            {
+                CheckStringVM.Instance.TextMatching = (Convert.ToInt32(CheckStringVM.Instance.TextMatching) + 1).ToString();
+            }
+            else
+            {
+                CheckStringVM.Instance.TextNotMatching = (Convert.ToInt32(CheckStringVM.Instance.TextNotMatching) + 1).ToString();
+            }
 
         }
 

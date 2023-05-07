@@ -573,7 +573,7 @@ namespace DataDecommision
         private void Timer_Tick(object sender, EventArgs e)
         {
             if(TextTotalBottle != scannedBottleCount)
-                ScannerDecoder.FindBarcodeScanner(ScannerDecoder.userSelectedPort, true);
+                ScannerDecoder.FindBarcodeScanner(ScannerDecoder.userSelectedPort, 1);
             if (TextTotalBottle == scannedBottleCount)
                 ButtonBackgroundColor = Brushes.DarkGreen;
         }

@@ -24,7 +24,7 @@ namespace DataDecommision
         public CheckStringPage()
         {
             InitializeComponent();
-            this.DataContext = new  CheckStringVM();
+            this.DataContext = CheckStringVM.Instance;
         }
         private void PreviewTextInput1(object sender, TextCompositionEventArgs e)
         {
