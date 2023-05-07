@@ -62,6 +62,7 @@
     <Compile Include="Utilities\Common.cs" />
     <Compile Include="Utilities\ScanData.cs" />
     <Compile Include="Utilities\ScannerDecoder.cs" />
+    <Compile Include="Utilities\XMLCreation.cs" />
     <Compile Include="ViewModels\BulkItemVM.cs" />
     <Compile Include="ViewModels\CheckStringVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
