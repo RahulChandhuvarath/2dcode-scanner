@@ -380,6 +380,11 @@ namespace DataDecommision
 
         public void ButtonMAdd()
         {
+            if (ScannedBottleCount == TextTotalBottle)
+            {
+                MessageBox.Show("Cannot Add!!\nTotal bottle count reached its limit.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             if (SelectedDate == null)
             {
                 MessageBox.Show("Not a Valid Date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -393,16 +398,22 @@ namespace DataDecommision
 
             ScanData sd = new ScanData(((DateTime)SelectedDate).ToString("yyyy-MM-dd"), TextLot, TextGtin, TextSerial);
             List<ScanData> lstSD = new List<ScanData>(ScanDisplayVM.Instance.LstScanData);
+            TextLot = "";
+            TextGtin = "";
+            TextSerial = "";
+            SelectedDate = null;
             if (!lstSD.Contains(sd))
+            {
                 lstSD.Add(sd);
+            }
             else
             {
                 MessageBox.Show("Duplicate!!\n\nData already Added/Scanned.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            ScanDisplayVM.Instance.LstScanData = new System.Collections.ObjectModel.ObservableCollection<ScanData>(lstSD); ;
-
+            ScanDisplayVM.Instance.LstScanData = new System.Collections.ObjectModel.ObservableCollection<ScanData>(lstSD);
+            MessageBox.Show("Added Succesfully!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
 
@@ -474,6 +485,7 @@ namespace DataDecommision
         }
         public void ButtonQuit()
         {
+            TextTotalBottle = "";
             BottleStatus = "";
             BottlePopup = false;
             Application.Current.MainWindow.IsEnabled = true;
@@ -504,7 +516,7 @@ namespace DataDecommision
 
                 IsTextReadonly = false;
                 IsTextFocus = true;
-                IsModifyVisible = false;
+                //IsModifyVisible = false;
             }
             else if (PasswordType == 2) //Delete
             {
@@ -518,6 +530,7 @@ namespace DataDecommision
         }
         public void ButtonPassQuit()
         {
+            TextConfirmBottle = "";
             TextPassword = string.Empty;
             PassStatus = "";
             PasswordPopup = false;
@@ -528,13 +541,15 @@ namespace DataDecommision
         {
             CustomerPopup = false;
             Application.Current.MainWindow.IsEnabled = true;
-            MessageBox.Show("XML file created succesfully!!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            XMLCreation.CreateXML(XMLCreation.GetAHPScanData());
+            MessageBox.Show("XML file created succesfully in \"My Documnets\" location!!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         public void ButtonOther()
         {
             CustomerPopup = false;
             Application.Current.MainWindow.IsEnabled = true;
-            MessageBox.Show("XML file created succesfully!!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            XMLCreation.CreateXML(XMLCreation.GetScanData());
+            MessageBox.Show("XML file created succesfully in \"My Documnets\" location!!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         public void ButtonModify()
         {
