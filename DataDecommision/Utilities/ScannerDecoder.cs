@@ -333,6 +333,8 @@ namespace DataDecommision
             ScanData sd = new ScanData(expirationDate, lotNumber, gtin, serialNumber);
             List<ScanData> lstSD = new List<ScanData>(ScanDisplayVM.Instance.LstScanData);
 
+            if (lstSD.Count() == Convert.ToInt32(ScanDisplayVM.Instance.TextTotalBottle))
+                return;
             if (!lstSD.Contains(sd))
                 lstSD.Add(sd);
             DispatchService.Invoke(() =>

@@ -99,6 +99,11 @@ namespace DataDecommision
         }
 
        
+
+        private void TextBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            ScanDisplayVM.Instance.IsTextReadonly = true;
+        }
     }
 
     public static class TextBoxFocusBehavior

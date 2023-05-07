@@ -176,7 +176,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Content="Total Bottles:" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Foreground="MidnightBlue" Background="Transparent" />
-                <TextBox Grid.Column="1" Text="{Binding TextTotalBottle}"  IsReadOnly="{Binding IsTextReadonly}"  Width="130" HorizontalAlignment="Center"  VerticalAlignment="Center"  FontSize="40" FontWeight="Bold" Foreground="DarkOliveGreen" Background="Transparent"  local:TextBoxFocusBehavior.Focus="{Binding IsTextFocus}"  />
+                <TextBox Grid.Column="1" Text="{Binding TextTotalBottle}"  IsReadOnly="{Binding IsTextReadonly}" LostFocus="TextBox_TextChanged" Width="130" HorizontalAlignment="Center"  VerticalAlignment="Center"  FontSize="40" FontWeight="Bold" Foreground="DarkOliveGreen" Background="Transparent"  local:TextBoxFocusBehavior.Focus="{Binding IsTextFocus}"  />
                 <Button  Grid.Column="2" Visibility="{Binding IsModifyVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Background="DarkGoldenrod" HorizontalAlignment="Left" FontSize="12" Content="UNLOCK &#x0a;     TO&#x0a;MODIFY"  FontWeight="Bold" Foreground="White" Height="50" Width="75" Command="{Binding ButtonModifyClick}" />
             </Grid>
             <Grid Grid.Row="2">
