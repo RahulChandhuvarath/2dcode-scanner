@@ -23,7 +23,7 @@ namespace DataDecommision
         }
         public LoginVM()
         {
-            loginCredentials = Common.GetCredentials();
+            loginCredentials = Common.GetCredentialsExcel();
             AllPorts = SerialPort.GetPortNames();
             if (AllPorts.Count() > 0)
                 SelectedPort = AllPorts[0];
