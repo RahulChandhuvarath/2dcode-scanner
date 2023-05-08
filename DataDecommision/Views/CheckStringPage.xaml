@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:DataDecommision"
+      xmlns:local="clr-namespace:DataDecommision" d:DataContext="{d:DesignInstance Type=local:CheckStringVM}"
       mc:Ignorable="d" 
       Title="CheckStringPage">
 
@@ -47,20 +47,20 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontWeight="Bold" Margin="60,0,0,0" TextWrapping="Wrap" Text="STRING" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <Label Grid.Column="1" HorizontalAlignment="Left" FontWeight="Bold" VerticalAlignment="Center"  FontSize="20"  Foreground="Black" Content="23874875817468655493675a81239gv"/>
+            <Label Grid.Column="1" HorizontalAlignment="Left" FontWeight="Bold" VerticalAlignment="Center"  FontSize="20"  Foreground="Black" Content="{Binding TextString}"/>
 
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             
             <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontWeight="Bold" Margin="60,0,0,0" TextWrapping="Wrap" Text="LENGTH" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <Label Grid.Column="1" HorizontalAlignment="Left" FontWeight="Bold" VerticalAlignment="Center"  FontSize="20"  Foreground="Black" Content="30"/>
+            <Label Grid.Column="1" HorizontalAlignment="Left" FontWeight="Bold" VerticalAlignment="Center"  FontSize="20"  Foreground="Black" Content="{Binding TextLength}"/>
         </Grid>
         <Grid Grid.Row="3" >
             <Grid.ColumnDefinitions>
@@ -79,8 +79,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Top"  FontSize="45"  Foreground="ForestGreen" Content="10"/>
-            <Label Grid.Column="1" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Top"  FontSize="45"  Foreground="Red" Content="2"/>
+            <Label Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Top"  FontSize="45"  Foreground="ForestGreen" Content="{Binding TextMatching}"/>
+            <Label Grid.Column="1" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Top"  FontSize="45"  Foreground="Red" Content="{Binding TextNotMatching}"/>
         </Grid>
 
         <Grid Grid.Row="5">
@@ -89,7 +89,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Background="DarkGreen" Height="45" Width="150" FontSize="20" HorizontalAlignment="Center" Content="BACK"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" Command="{Binding ButtonBackClick}" />
-            <Button Grid.Column="1" Background="DarkGreen" Height="45" Width="150" FontSize="20" HorizontalAlignment="Center" Content="START SCAN"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" Command="{Binding ButtonCheckClick}" />
+            <Button Grid.Column="1"  Background="{Binding ButtonBackgroundColor}" Height="45" Width="150" FontSize="20" HorizontalAlignment="Center" Content="START SCAN"  FontWeight="Bold" Foreground="White"  VerticalAlignment="Center" Command="{Binding ButtonCheckClick}" />
        </Grid>
 
     </Grid>
