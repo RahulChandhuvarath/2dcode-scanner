@@ -50,7 +50,7 @@
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="EXP (YYYY-MM-DD)" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
             <Grid Grid.Column="1">
                 <Grid.LayoutTransform>
-                    <ScaleTransform ScaleX="2.2" ScaleY="2.2" />
+                    <ScaleTransform ScaleX="2.1" ScaleY="2.1" />
                 </Grid.LayoutTransform>
                 <DatePicker x:Name="expdate" Grid.Column="1"  SelectedDate="{Binding SelectedDate}"  HorizontalAlignment="Left"  Width="130" VerticalAlignment="Center"  >
                     <DatePicker.Resources>
