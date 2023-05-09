@@ -137,7 +137,7 @@ namespace DataDecommision
             {
             "Lot Number (Bulk)",
             "Expiration Date",
-              "Lot Number (RePacked)"
+              "Lot Number (Repackaged)"
             };
 
             string[] fieldValues = new string[]
