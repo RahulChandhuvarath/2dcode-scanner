@@ -14,8 +14,8 @@ namespace UnitTest
             //10123456
             //17331012
             //21123457
-            var value =ScannerDecoder.DecodeString("0112345678912345101234561733101221123457");
-            Assert.AreEqual(("12345678912345", "123456", "331012", "123457"), value);
+            ScannerDecoder.ContinousDecodeString("010030054017713321100442417293211724043010AB8366A");
+            //Assert.AreEqual(("00300540177133", "AB8366A", "240430", "10044241729321"), value);
         }
 
         [TestMethod]

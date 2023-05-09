@@ -15,6 +15,7 @@ using System.Threading;
 using System.Runtime.Remoting.Contexts;
 using System.Windows.Markup;
 using System.Windows.Threading;
+using System.Windows;
 
 namespace DataDecommision
 {
@@ -111,6 +112,7 @@ namespace DataDecommision
             return scannerPort;
         }
 
+        
 
         /// <summary>
         /// Decodes the scanned 2d String gtin,lot,EXP,Serial
@@ -125,98 +127,108 @@ namespace DataDecommision
 
             string gtin = null, serialNumber = null, expirationDate = null, lotNumber = null;
 
-            if (value.StartsWith("01"))
-            {
-                gtin = value.Substring(2, 14);
-                value = value.Remove(0, 16);
-            }
-            int startindex17 = 0;
-            int length = value.Length;
-            if (value.StartsWith("21") || value.StartsWith("10"))
+            try
             {
 
-                do
+                if (value.StartsWith("01"))
+                {
+                    gtin = value.Substring(2, 14);
+                    value = value.Remove(0, 16);
+                }
+                int startindex17 = 0;
+                int length = value.Length;
+                if (value.StartsWith("21") || value.StartsWith("10"))
                 {
 
-                    int index = value.IndexOf("17", startindex17);
-                    if (startindex17 == index)
+                    do
                     {
-                        break;
-                    }
-                    else
-                    {
-                        startindex17 = index;
-                    }
 
-                    if (startindex17 > 0)
-                    {
-                        if (length > startindex17 + 10)
+                        int index = value.IndexOf("17", startindex17 + 2);
+                        if (startindex17 == index)
                         {
-
-                            if (value.StartsWith("21") || value.StartsWith("10"))
-                            {
-                                expirationDate = value.Substring(startindex17 + 2, 6);
-                                break;
-                            }
-                        }
-                        else if (length == startindex17 + 8)
-                        {
-                            expirationDate = value.Substring(startindex17 + 2, 6);
+                            startindex17 = 0;
                             break;
                         }
                         else
                         {
-                            break;
+                            startindex17 = index;
+                        }
+
+                        if (startindex17 > 0)
+                        {
+                            if (length > startindex17 + 10)
+                            {
+                                string temp = value.Substring(startindex17 + 8, 2);
+                                if (temp == "21" || temp == "10")
+                                {
+                                    expirationDate = value.Substring(startindex17 + 2, 6);
+                                    break;
+                                }
+                            }
+                            else if (length == startindex17 + 8)
+                            {
+                                expirationDate = value.Substring(startindex17 + 2, 6);
+                                break;
+                            }
+                            else
+                            {
+                                startindex17 = 0;
+                                break;
+                            }
+                        }
+
+                    } while (startindex17 >= 0);
+
+                }
+                if (startindex17 != 0)
+                {
+                    if (value.StartsWith("21"))
+                    {
+                        serialNumber = value.Substring(2, startindex17 - 2);
+                    }
+                    else if (value.StartsWith("10"))
+                    {
+                        lotNumber = value.Substring(2, startindex17 - 2);
+                    }
+
+                    if (length > startindex17 + 10)
+                    {
+                        if (value.Substring(startindex17 + 8, 2) == "21")
+                        {
+                            serialNumber = value.Substring(startindex17 + 10);
+                        }
+                        else if (value.Substring(startindex17 + 8, 2) == "10")
+                        {
+                            lotNumber = value.Substring(startindex17 + 10);
                         }
                     }
-
-                } while (startindex17 >= 0);
-
-            }
-            if (startindex17 != 0)
-            {
-                if (value.StartsWith("21"))
-                {
-                    serialNumber = value.Substring(2, startindex17 - 2);
-                }
-                else if (value.StartsWith("10"))
-                {
-                    lotNumber = value.Substring(2, startindex17 - 2);
                 }
 
-                if (length > startindex17 + 10)
+                if (startindex17 == 0)
                 {
-                    if (value.Substring(startindex17 + 8, 2) == "21")
+                    if (length >= startindex17 + 8)
                     {
-                        serialNumber = value.Substring(startindex17 + 10);
+                        if (value.StartsWith("17"))
+                        {
+                            expirationDate = value.Substring(2, 6);
+                        }
                     }
-                    else if (value.Substring(startindex17 + 8, 2) == "10")
+                    if (length > startindex17 + 10)
                     {
-                        lotNumber = value.Substring(startindex17 + 10);
+                        if (value.Substring(startindex17 + 8, 2) == "21")
+                        {
+                            serialNumber = value.Substring(startindex17 + 10);
+                        }
+                        else if (value.Substring(startindex17 + 8, 2) == "10")
+                        {
+                            lotNumber = value.Substring(startindex17 + 10);
+                        }
                     }
                 }
             }
-
-            if (startindex17 == 0)
+            catch(Exception)
             {
-                if (length >= startindex17 + 8)
-                {
-                    if (value.StartsWith("17"))
-                    {
-                        expirationDate = value.Substring(2, 6);
-                    }
-                }
-                if (length > startindex17 + 10)
-                {
-                    if (value.Substring(startindex17 + 8, 2) == "21")
-                    {
-                        serialNumber = value.Substring(startindex17 + 10);
-                    }
-                    else if (value.Substring(startindex17 + 8, 2) == "10")
-                    {
-                        lotNumber = value.Substring(startindex17 + 10);
-                    }
-                }
+                MessageBox.Show("Error in Decode.\nInput String : " + inputString, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             return (gtin, lotNumber, expirationDate, serialNumber);
         }
@@ -230,105 +242,9 @@ namespace DataDecommision
         /// <returns></returns>
         public static void ContinousDecodeString(string inputString)
         {
-
-            string pattern = "[^a-zA-Z0-9-]+";
-            string value = Regex.Replace(inputString, pattern, "");
-
             string gtin = null, serialNumber = null, expirationDate = null, lotNumber = null;
-
-            if (value.StartsWith("01"))
-            {
-                gtin = value.Substring(2, 14);
-                value = value.Remove(0, 16);
-            }
-            int startindex17 = 0;
-            int length = value.Length;
-            if (value.StartsWith("21") || value.StartsWith("10"))
-            {
-
-                do
-                {
-
-                    int index = value.IndexOf("17", startindex17);
-                    if (startindex17 == index)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        startindex17 = index;
-                    }
-
-                    if (startindex17 > 0)
-                    {
-                        if (length > startindex17 + 10)
-                        {
-
-                            if (value.StartsWith("21") || value.StartsWith("10"))
-                            {
-                                expirationDate = value.Substring(startindex17 + 2, 6);
-                                break;
-                            }
-                        }
-                        else if (length == startindex17 + 8)
-                        {
-                            expirationDate = value.Substring(startindex17 + 2, 6);
-                            break;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-
-                } while (startindex17 >= 0);
-
-            }
-            if (startindex17 != 0)
-            {
-                if (value.StartsWith("21"))
-                {
-                    serialNumber = value.Substring(2, startindex17 - 2);
-                }
-                else if (value.StartsWith("10"))
-                {
-                    lotNumber = value.Substring(2, startindex17 - 2);
-                }
-
-                if (length > startindex17 + 10)
-                {
-                    if (value.Substring(startindex17 + 8, 2) == "21")
-                    {
-                        serialNumber = value.Substring(startindex17 + 10);
-                    }
-                    else if (value.Substring(startindex17 + 8, 2) == "10")
-                    {
-                        lotNumber = value.Substring(startindex17 + 10);
-                    }
-                }
-            }
-
-            if (startindex17 == 0)
-            {
-                if (length >= startindex17 + 8)
-                {
-                    if (value.StartsWith("17"))
-                    {
-                        expirationDate = value.Substring(2, 6);
-                    }
-                }
-                if (length > startindex17 + 10)
-                {
-                    if (value.Substring(startindex17 + 8, 2) == "21")
-                    {
-                        serialNumber = value.Substring(startindex17 + 10);
-                    }
-                    else if (value.Substring(startindex17 + 8, 2) == "10")
-                    {
-                        lotNumber = value.Substring(startindex17 + 10);
-                    }
-                }
-            }
+            (gtin, lotNumber, expirationDate, serialNumber)  = DecodeString(inputString);
+            
             if (expirationDate != null && expirationDate != "")
             {
                 DateTime expResult = DateTime.ParseExact(20 + expirationDate, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
@@ -357,13 +273,14 @@ namespace DataDecommision
 
             //scantext = scannerPort.ReadExisting();
 
-
+            Thread.Sleep(10);
             byte[] buffer = new byte[scannerPort.BytesToRead];
             scannerPort.Read(buffer, 0, buffer.Length);
             scantext = Encoding.ASCII.GetString(buffer);
 
         }
 
+        private static string receivedStringContinous = "";
         static void OnDataReceivedConti(object sender, SerialDataReceivedEventArgs e)
         {
             // read the data from the serial port buffer
@@ -372,14 +289,32 @@ namespace DataDecommision
             //scantext = scannerPort.ReadExisting();
             byte[] buffer = new byte[scannerPort.BytesToRead];
             scannerPort.Read(buffer, 0, buffer.Length);
-            scantext = Encoding.ASCII.GetString(buffer);
-            ContinousDecodeString(scantext);
+            string data = Encoding.ASCII.GetString(buffer);
+            receivedStringContinous += data;
+
+            if (receivedStringContinous.StartsWith("\u0002") && receivedStringContinous.Contains("\u0003"))
+            {
+                string input = receivedStringContinous;
+                receivedStringContinous = "";
+                ContinousDecodeString(input);
+            }
+            else if (!receivedStringContinous.StartsWith("\u0002") && receivedStringContinous.Length > 20)
+            {
+                Thread.Sleep(2);
+                string input = receivedStringContinous;
+                receivedStringContinous = "";
+                ContinousDecodeString(input);
+            }
+            else
+            {
+                Thread.Sleep(2);
+            }
 
 
         }
 
-       
 
+        private static string receivedStringCheck = "";
         static void OnDataReceivedCheckConti(object sender, SerialDataReceivedEventArgs e)
         {
             // read the data from the serial port buffer
@@ -388,8 +323,27 @@ namespace DataDecommision
             //scantext = scannerPort.ReadExisting();
             byte[] buffer = new byte[scannerPort.BytesToRead];
             scannerPort.Read(buffer, 0, buffer.Length);
-            scantext = Encoding.ASCII.GetString(buffer);
-            ContinousCheckString(scantext);
+            string data = Encoding.ASCII.GetString(buffer);
+            receivedStringCheck += data;
+
+            if (receivedStringCheck.StartsWith("\u0002") && receivedStringCheck.Contains("\u0003"))
+            {
+                string input = receivedStringCheck;
+                receivedStringCheck = "";
+                ContinousCheckString(input);
+            }
+            else if (!receivedStringCheck.StartsWith("\u0002") && receivedStringCheck.Length > 20)
+            {
+                Thread.Sleep(2);
+                string input = receivedStringCheck;
+                receivedStringCheck = "";
+                ContinousCheckString(input);
+            }
+            else
+            {
+                Thread.Sleep(2);
+            }
+            
         }
 
         private static void ContinousCheckString(string inputString)
