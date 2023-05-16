@@ -19,7 +19,7 @@ namespace DataDecommision
             {
                 string userName = DecomData.UserName;
                 string formattedTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
+                
                 string fileName = $"Decom_ScanData.accdb";
                 string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), fileName);
 
@@ -38,7 +38,7 @@ namespace DataDecommision
                     connection.Open();
                     if (!fileExists)
                     {
-                        string createTableQuery = "CREATE TABLE ScanDetails ([USER] TEXT,[DATE_TIME] TEXT, [SCAN_STRING] TEXT);";
+                        string createTableQuery = "CREATE TABLE ScanDetails ([USER] TEXT,[START_DATE_TIME] TEXT,[END_DATE_TIME] TEXT, [SCAN_STRING] TEXT);";
                         using (OleDbCommand createTableCommand = new OleDbCommand(createTableQuery, connection))
                         {
 
@@ -46,7 +46,7 @@ namespace DataDecommision
                         }
                     }
 
-                    string insertDataQuery = "INSERT INTO ScanDetails ([USER], [DATE_TIME], [SCAN_STRING]) VALUES (?,?,?);";
+                    string insertDataQuery = "INSERT INTO ScanDetails ([USER], [START_DATE_TIME],[END_DATE_TIME], [SCAN_STRING]) VALUES (?,?,?,?);";
                     using (OleDbCommand insertDataCommand = new OleDbCommand(insertDataQuery, connection))
                     {
 
@@ -57,7 +57,8 @@ namespace DataDecommision
                         {
                             insertDataCommand.Parameters.Clear();
                             insertDataCommand.Parameters.AddWithValue("USER", userName);
-                            insertDataCommand.Parameters.AddWithValue("DATE_TIME", formattedTime);
+                            insertDataCommand.Parameters.AddWithValue("START_DATE_TIME",DecomData.StartDateTime);
+                            insertDataCommand.Parameters.AddWithValue("END_DATE_TIME", formattedTime);
                             insertDataCommand.Parameters.AddWithValue("SCAN_STRING", scanData[i]);
                             insertDataCommand.ExecuteNonQuery();
                         }
