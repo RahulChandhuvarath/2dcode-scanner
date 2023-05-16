@@ -30,7 +30,7 @@ namespace DataDecommision
         /// Scans and decodes the string
         /// </summary>
         /// <returns>gtin,lot,EXP,Serial</returns>
-        public static (string,string,string,string) ScanAndDecode()
+        public static (string, string, string, string) ScanAndDecode()
         {
             scantext = "";
             // find the first available serial port that has a barcode scanner attached
@@ -40,25 +40,26 @@ namespace DataDecommision
                 for (int i = 0; i < 30; i++)
                 {
                     Thread.Sleep(1000);
-                    if(scantext != "")
+                    if (scantext != "" && scantext.Length > 25)
                     {
-
+                        scannerPort.Close();
                         return DecodeString(scantext);
+
                     }
-                    
+
                 }
-               
+
             }
             return ("", "", "", "");
         }
-           
 
-        
+
+
         /// <summary>
         /// Open all the serial ports and register the event
         /// </summary>
         /// <returns></returns>
-        public static SerialPort FindBarcodeScanner(string port, int type =0)
+        public static SerialPort FindBarcodeScanner(string port, int type = 0)
         {
             // get a list of all available serial ports
             List<string> portNames = new List<string>
@@ -67,12 +68,12 @@ namespace DataDecommision
             };
 
             SerialPort scannerPort = null;
-                ;
+            ;
             // configure the serial port settings for the scanner
 
             if (portNames.Count() >= 1)
             {
-                scannerPort = new SerialPort(portNames[0], 9600,Parity.None,8,StopBits.One);
+                scannerPort = new SerialPort(portNames[0], 9600, Parity.None, 8, StopBits.One);
                 scannerPort.Handshake = Handshake.None;
                 //scannerPort.Encoding = Encoding.UTF8;
                 try
@@ -83,17 +84,18 @@ namespace DataDecommision
                         //Thread thread = new Thread(() =>
                         //{
                         //    Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
-                            scannerPort.DataReceived += new SerialDataReceivedEventHandler(OnDataReceivedConti);
-                            //Thread.Sleep(50);
+                        scannerPort.DataReceived += new SerialDataReceivedEventHandler(OnDataReceivedConti);
+                        //Thread.Sleep(50);
                         //});
                         //thread.Start();
                     }
-                    else if(type == 2)
+                    else if (type == 2)
                     {
                         scannerPort.DataReceived += new SerialDataReceivedEventHandler(OnDataReceivedCheckConti);
                     }
                     else
                     {
+                        scantext = "";
                         scannerPort.DataReceived += new SerialDataReceivedEventHandler(OnDataReceived1);
                     }
                 }
@@ -106,13 +108,13 @@ namespace DataDecommision
                     //scannerPort.Close();
                 }
             }
-           
+
 
             // no barcode scanner was found on any of the available ports
             return scannerPort;
         }
 
-        
+
 
         /// <summary>
         /// Decodes the scanned 2d String gtin,lot,EXP,Serial
@@ -226,7 +228,7 @@ namespace DataDecommision
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show("Error in Decode.\nInput String : " + inputString, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -243,8 +245,8 @@ namespace DataDecommision
         public static void ContinousDecodeString(string inputString)
         {
             string gtin = null, serialNumber = null, expirationDate = null, lotNumber = null;
-            (gtin, lotNumber, expirationDate, serialNumber)  = DecodeString(inputString);
-            
+            (gtin, lotNumber, expirationDate, serialNumber) = DecodeString(inputString);
+
             if (expirationDate != null && expirationDate != "")
             {
                 DateTime expResult = DateTime.ParseExact(20 + expirationDate, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
@@ -261,10 +263,10 @@ namespace DataDecommision
             {
                 ScanDisplayVM.Instance.LstScanData = new System.Collections.ObjectModel.ObservableCollection<ScanData>(lstSD); ;
             });
-          
+
         }
 
-           
+
         static void OnDataReceived1(object sender, SerialDataReceivedEventArgs e)
         {
             //dataReceivedtemp.Set();
@@ -272,11 +274,15 @@ namespace DataDecommision
             SerialPort scannerPort = (SerialPort)sender;
 
             //scantext = scannerPort.ReadExisting();
-
-            Thread.Sleep(10);
             byte[] buffer = new byte[scannerPort.BytesToRead];
             scannerPort.Read(buffer, 0, buffer.Length);
-            scantext = Encoding.ASCII.GetString(buffer);
+            string data = Encoding.ASCII.GetString(buffer);
+            scantext += data;
+            if (scantext.Length > 25)
+            {
+                Thread.Sleep(2);
+
+            }
 
         }
 
@@ -298,7 +304,7 @@ namespace DataDecommision
                 receivedStringContinous = "";
                 ContinousDecodeString(input);
             }
-            else if (!receivedStringContinous.StartsWith("\u0002") && receivedStringContinous.Length > 20)
+            else if (!receivedStringContinous.StartsWith("\u0002") && receivedStringContinous.Length > 25)
             {
                 Thread.Sleep(2);
                 string input = receivedStringContinous;
@@ -332,7 +338,7 @@ namespace DataDecommision
                 receivedStringCheck = "";
                 ContinousCheckString(input);
             }
-            else if (!receivedStringCheck.StartsWith("\u0002") && receivedStringCheck.Length > 20)
+            else if (!receivedStringCheck.StartsWith("\u0002") && receivedStringCheck.Length > 25)
             {
                 Thread.Sleep(2);
                 string input = receivedStringCheck;
@@ -343,7 +349,7 @@ namespace DataDecommision
             {
                 Thread.Sleep(2);
             }
-            
+
         }
 
         private static void ContinousCheckString(string inputString)
@@ -357,7 +363,7 @@ namespace DataDecommision
                 return;
             }
 
-            if((inputString.Substring(0, 3) == CheckStringVM.Instance.TextString.Substring(0, 3))
+            if ((inputString.Substring(0, 3) == CheckStringVM.Instance.TextString.Substring(0, 3))
                 && inputString.Length == CheckStringVM.Instance.TextString.Length)
             {
                 CheckStringVM.Instance.TextMatching = (Convert.ToInt32(CheckStringVM.Instance.TextMatching) + 1).ToString();
@@ -419,7 +425,7 @@ namespace DataDecommision
         public static void Invoke(Action action)
         {
             Dispatcher dispatch = System.Windows.Application.Current.Dispatcher;
-            if(dispatch == null || dispatch.CheckAccess())
+            if (dispatch == null || dispatch.CheckAccess())
             {
                 action();
 

@@ -115,6 +115,7 @@ namespace DataDecommision
             if (SelectedPort == null || SelectedPort == "")
                 return;
 
+            DecomData.UserName = TextUserName;
             DecomData.Password = TextPassword;
             ScannerDecoder.userSelectedPort = SelectedPort;
             NavigationService navigationService = (NavigationService)App.Current.MainWindow.Resources["NavigationService"];
