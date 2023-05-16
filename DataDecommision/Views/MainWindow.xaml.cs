@@ -36,6 +36,10 @@ namespace DataDecommision
             {
                 e.Cancel = true; // Cancel the window's closing event
             }
+            else
+            {
+                AccessOperation.CreateDatabase();
+            }
         }
     }
 }

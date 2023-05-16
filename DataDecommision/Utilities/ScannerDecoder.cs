@@ -304,7 +304,7 @@ namespace DataDecommision
                 receivedStringContinous = "";
                 ContinousDecodeString(input);
             }
-            else if (!receivedStringContinous.StartsWith("\u0002") && receivedStringContinous.Length > 20)
+            else if (!receivedStringContinous.StartsWith("\u0002") && receivedStringContinous.Length > 25)
             {
                 Thread.Sleep(2);
                 string input = receivedStringContinous;
@@ -338,7 +338,7 @@ namespace DataDecommision
                 receivedStringCheck = "";
                 ContinousCheckString(input);
             }
-            else if (!receivedStringCheck.StartsWith("\u0002") && receivedStringCheck.Length > 20)
+            else if (!receivedStringCheck.StartsWith("\u0002") && receivedStringCheck.Length > 25)
             {
                 Thread.Sleep(2);
                 string input = receivedStringCheck;

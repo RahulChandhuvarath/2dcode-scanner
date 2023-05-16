@@ -8,6 +8,8 @@ namespace DataDecommision
 {
     public class DecomData
     {
+
+        public static string UserName { get; set; }
         public static string Password { get; set; }
 
         public static string BulkExp { get; set; }
