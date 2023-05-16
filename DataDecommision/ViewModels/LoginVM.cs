@@ -114,7 +114,7 @@ namespace DataDecommision
             }
             if (SelectedPort == null || SelectedPort == "")
                 return;
-
+            DecomData.StartDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DecomData.UserName = TextUserName;
             DecomData.Password = TextPassword;
             ScannerDecoder.userSelectedPort = SelectedPort;

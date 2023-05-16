@@ -10,6 +10,8 @@ namespace DataDecommision
     {
 
         public static string UserName { get; set; }
+
+        public static string StartDateTime { get; set; }
         public static string Password { get; set; }
 
         public static string BulkExp { get; set; }
