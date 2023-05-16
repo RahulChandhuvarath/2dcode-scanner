@@ -402,6 +402,21 @@ namespace DataDecommision
             TextGtin = "";
             TextSerial = "";
             SelectedDate = null;
+            if(sd.Expdate != DecomData.BulkExp)
+            {
+                MessageBox.Show("Expiry Date Not Matching", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (sd.LotNumber != DecomData.BulkLot)
+            {
+                MessageBox.Show("Lot Number Not Matching", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (sd.GTIN != DecomData.BulkGtin)
+            {
+                MessageBox.Show("GTIN Not Matching", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             if (!lstSD.Contains(sd))
             {
                 lstSD.Add(sd);

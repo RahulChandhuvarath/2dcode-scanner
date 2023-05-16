@@ -67,7 +67,7 @@ namespace DataDecommision
                     connection.Close();
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
 
             }
