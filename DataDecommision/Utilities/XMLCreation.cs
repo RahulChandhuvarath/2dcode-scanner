@@ -143,7 +143,7 @@ namespace DataDecommision
             string[] fieldValues = new string[]
             {
             DecomData.BulkLot,
-            DecomData.RepackExp,
+            DecomData.BulkExp,
             DecomData.RepackLot
                 // Add more field values here...
             };
