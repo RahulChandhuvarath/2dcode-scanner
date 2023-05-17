@@ -7,6 +7,7 @@ using System.Data.OleDb;
 using System.IO;
 
 
+
 namespace DataDecommision
 {
     internal static class AccessOperation
@@ -22,13 +23,13 @@ namespace DataDecommision
                 string fileName = $"Decom_ScanData.accdb";
                 string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), fileName);
 
-                string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={filePath};";
+                string connectionString = $"Provider=Microsoft.ACE.OLEDB.16.0;Data Source={filePath};";
 
                 bool fileExists = File.Exists(filePath);
                 if (!fileExists)
                 {
                     ADOX.Catalog catalog = new ADOX.Catalog();
-                    catalog.Create($"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={filePath};Jet OLEDB:Engine Type=5");
+                    catalog.Create($"Provider=Microsoft.ACE.OLEDB.16.0;Data Source={filePath};Jet OLEDB:Engine Type=5");
 
 
                     //catalog.Create($"Provider=Microsoft.ACE.OLEDB.16.0;Data Source={filePath};Jet OLEDB:Engine Type=5");
