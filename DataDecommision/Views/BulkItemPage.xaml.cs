@@ -88,6 +88,20 @@ namespace DataDecommision
            // }
         }
 
+        private void PreviewTextInput4(object sender, TextCompositionEventArgs e)
+        {
+
+            //Define a regular expression pattern that matches alphanumeric characters
+            Regex regex = new Regex("^[0-9-]*$");
+
+             // Test the input against the regular expression pattern
+             if (!regex.IsMatch(e.Text))
+             {
+                 //If the input doesn't match, mark the event as handled to prevent it from being entered
+                e.Handled = true;
+             }
+}
+
         private void Expdate_SelectedDateChanged(object sender, RoutedEventArgs e)
         {
             //var bulkItemVM = this.DataContext as BulkItemVM;

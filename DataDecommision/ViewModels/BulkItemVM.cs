@@ -74,6 +74,14 @@ namespace DataDecommision
             set { textGtin = value; NotifyPropertyChanged("TextGtin"); }
         }
 
+        private string textNDC;
+        public string TextNDC
+        {
+            get { return textNDC; }
+            set { textNDC = value; NotifyPropertyChanged("TextNDC"); }
+        }
+
+
         private string textBottle;
         public string TextBottle
         {
@@ -141,9 +149,14 @@ namespace DataDecommision
                 MessageBox.Show("Not a Valid Date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if(TextLot == null || TextLot == "" || TextGtin == null || TextGtin == ""|| TextBottle == null || TextBottle == "")
+            if(TextLot == null || TextLot == "" || TextGtin == null || TextGtin == ""|| TextNDC == null || TextNDC == ""|| TextBottle == null || TextBottle == "")
             {
                 MessageBox.Show("Input in some fileds are missing", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if(TextNDC.Length != 12)
+            {
+                MessageBox.Show("NDC should have 12 Characters including \"-\"", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             try
@@ -151,6 +164,7 @@ namespace DataDecommision
                 DecomData.BulkExp = ((DateTime)SelectedDate).ToString("yyyy-MM-dd");
                 DecomData.BulkLot = TextLot;
                 DecomData.BulkGtin = TextGtin;
+                DecomData.BulkNDC = TextNDC;
                 DecomData.BulkBottle = TextBottle;
             }
             catch { }
