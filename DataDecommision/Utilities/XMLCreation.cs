@@ -135,16 +135,18 @@ namespace DataDecommision
             // Create and append <epcis:field> elements under <epcis:extension>
             string[] fieldNames = new string[]
             {
-            "Lot Number (Bulk)",
-            "Expiration Date",
-              "Lot Number (Repackaged)"
+                "NDC (Bulk)",
+                "Lot Number (Bulk)",
+                "Expiration Date",
+                "Lot Number (Repackaged)"
             };
 
             string[] fieldValues = new string[]
             {
-            DecomData.BulkLot,
-            DecomData.BulkExp,
-            DecomData.RepackLot
+                DecomData.BulkNDC,
+                DecomData.BulkLot,
+                DecomData.BulkExp,
+                DecomData.RepackLot
                 // Add more field values here...
             };
 

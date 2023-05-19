@@ -26,6 +26,9 @@ namespace DataDecommision
         {
             InitializeComponent();
             this.DataContext = new ViewModel();
+
+            // Handle the application level unhandled exception
+            App.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -40,6 +43,16 @@ namespace DataDecommision
             {
                 AccessOperation.CreateDatabase();
             }
+        }
+
+        private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            // Your crash handling code here
+            MessageBox.Show("Crashed due to unknown error", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            AccessOperation.CreateDatabase();
+            // Prevent the application from terminating
+            e.Handled = false;
         }
     }
 }
