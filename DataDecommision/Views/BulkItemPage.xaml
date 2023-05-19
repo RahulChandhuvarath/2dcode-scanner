@@ -32,6 +32,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="2.5*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -82,17 +83,17 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="GTIN" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}" PreviewTextInput="PreviewTextInput1"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}" PreviewTextInput="PreviewTextInput4"/>
         </Grid>
-        <!--<Grid Grid.Row="4">
+        <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="Serial Number" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextSerial}" PreviewTextInput="PreviewTextInput1"/>
-        </Grid>-->
-        <Grid Grid.Row="4">
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="NDC" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextNDC}" PreviewTextInput="PreviewTextInput4"/>
+        </Grid>
+        <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.5*"/>
@@ -108,7 +109,7 @@
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="Bottles/Case" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
             <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black"  PreviewTextInput="PreviewTextInput2"/>
         </Grid>-->
-        <Grid Grid.Row="5">
+        <Grid Grid.Row="6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

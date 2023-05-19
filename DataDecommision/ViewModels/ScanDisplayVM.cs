@@ -181,6 +181,7 @@ namespace DataDecommision
             set { textGtin = value; NotifyPropertyChanged("TextGtin"); }
         }
 
+      
         private string textLot;
         public string TextLot
         {

@@ -84,7 +84,7 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="60,0,0,0" TextWrapping="Wrap" Text="GTIN" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}" PreviewTextInput="PreviewTextInput1"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}" PreviewTextInput="PreviewTextInput4"/>
         </Grid>
      
        

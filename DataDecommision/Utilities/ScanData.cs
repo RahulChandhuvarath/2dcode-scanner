@@ -20,6 +20,8 @@ namespace DataDecommision
 
         public static string BulkGtin { get; set; }
 
+        public static string BulkNDC { get; set; }
+
         public static string BulkBottle { get; set; }
 
         public static string BulkCase { get; set; }
