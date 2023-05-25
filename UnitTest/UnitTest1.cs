@@ -21,11 +21,12 @@ namespace UnitTest
         [TestMethod]
         public void TestDecode2()
         {
+            
             //0112345678912345
             //10123456
             //17331012
             //21123457
-            var value = ScannerDecoder.DecodeString("0112345678912345211234571733101210123456");
+            var value = ScannerDecoder.DecodeString("011234567891234521123457101234561733101230");
             Assert.AreEqual(("12345678912345", "123456", "331012", "123457"), value);
         }
 
