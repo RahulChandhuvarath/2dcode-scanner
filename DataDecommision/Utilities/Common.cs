@@ -12,6 +12,7 @@ namespace DataDecommision
     public static class Common
     {
 
+        public static Dictionary<string, string> loginCredentials = new Dictionary<string, string>();
         public static Dictionary<string, string> GetCredentials()
         {
             Dictionary<string, string> loginDictionary = new Dictionary<string, string>();

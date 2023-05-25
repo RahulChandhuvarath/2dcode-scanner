@@ -23,7 +23,7 @@ namespace DataDecommision
         }
         public LoginVM()
         {
-            loginCredentials = Common.GetCredentialsExcel();
+            Common.loginCredentials = Common.GetCredentialsExcel();
             AllPorts = SerialPort.GetPortNames();
             if (AllPorts.Count() > 0)
                 SelectedPort = AllPorts[0];
@@ -89,11 +89,11 @@ namespace DataDecommision
 
         public ButtonCommandBinding ButtonLoginClick { get; set; }
 
-        private static Dictionary<string, string> loginCredentials = new Dictionary<string, string>();
+        
         public void ButtonLogin()
         {
            
-            if (TextUserName ==null || !loginCredentials.Keys.Contains(TextUserName))
+            if (TextUserName ==null || !Common.loginCredentials.Keys.Contains(TextUserName))
             {
                 UserStatus = "Invalid Username!!";
                 return;
@@ -103,7 +103,7 @@ namespace DataDecommision
                 UserStatus = "";
             }
 
-            if (TextPassword == null  || loginCredentials[TextUserName] != TextPassword)
+            if (TextPassword == null  || Common.loginCredentials[TextUserName] != TextPassword)
             {
                 PassStatus = "Wrong Password!!";
                 return;

@@ -510,7 +510,7 @@ namespace DataDecommision
         private static int PasswordType = 0;
         public void ButtonPassConfirm()
         {
-            if (TextPassword != DecomData.Password)
+            if (!Common.loginCredentials.Values.Contains(TextPassword))
             {
                 PassStatus = "Wrong Password!!";
                 return;
