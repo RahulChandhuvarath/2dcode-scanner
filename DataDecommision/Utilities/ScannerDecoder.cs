@@ -167,7 +167,7 @@ namespace DataDecommision
                                     break;
                                 }
                             }
-                            else if (length == startindex17 + 8)
+                            else if (length >= startindex17 + 8)
                             {
                                 expirationDate = value.Substring(startindex17 + 2, 6);
                                 break;
@@ -184,15 +184,7 @@ namespace DataDecommision
                 }
                 if (startindex17 != 0)
                 {
-                    if (value.StartsWith("21"))
-                    {
-                        serialNumber = value.Substring(2, startindex17 - 2);
-                    }
-                    else if (value.StartsWith("10"))
-                    {
-                        lotNumber = value.Substring(2, startindex17 - 2);
-                    }
-
+                    
                     if (length > startindex17 + 10)
                     {
                         if (value.Substring(startindex17 + 8, 2) == "21")
@@ -204,6 +196,31 @@ namespace DataDecommision
                             lotNumber = value.Substring(startindex17 + 10);
                         }
                     }
+
+                    if (value.StartsWith("21"))
+                    {
+                        int indexlotNumber = startindex17 - 2;
+                        if (lotNumber == null)
+                        {
+                            indexlotNumber = value.IndexOf("10", 2, startindex17);
+                            lotNumber = value.Substring(indexlotNumber+2, startindex17 - indexlotNumber-2);
+                            indexlotNumber = indexlotNumber - 2;
+                        }
+                        serialNumber = value.Substring(2, indexlotNumber);
+                    }
+                    else if (value.StartsWith("10"))
+                    {
+                        int indexSerialNumber = startindex17 - 2;
+                        if (serialNumber == null)
+                        {
+                            indexSerialNumber = value.IndexOf("21", 2, startindex17);
+                            serialNumber = value.Substring(indexSerialNumber + 2, startindex17 - indexSerialNumber-2);
+                            indexSerialNumber = indexSerialNumber - 2;
+                        }
+                        lotNumber = value.Substring(2, indexSerialNumber);
+                        
+                    }
+
                 }
 
                 if (startindex17 == 0)
