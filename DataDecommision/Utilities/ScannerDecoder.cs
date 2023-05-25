@@ -16,6 +16,7 @@ using System.Runtime.Remoting.Contexts;
 using System.Windows.Markup;
 using System.Windows.Threading;
 using System.Windows;
+using System.Windows.Media;
 
 namespace DataDecommision
 {
@@ -184,8 +185,8 @@ namespace DataDecommision
                 }
                 if (startindex17 != 0)
                 {
-                    
-                    if (length > startindex17 + 10)
+
+                    if (length > startindex17 + 10)  ///scenario 03,21,17,10  or 03,10,17,21
                     {
                         if (value.Substring(startindex17 + 8, 2) == "21")
                         {
@@ -195,18 +196,40 @@ namespace DataDecommision
                         {
                             lotNumber = value.Substring(startindex17 + 10);
                         }
-                    }
 
+                       
+                    }
+                    else if (length == startindex17 + 8) ///scenario 03,21,10,17  or 03,10,21,17
+                    {
+                        string[] escapeSequences = { "\\u001d"};
+                        string updatedString = inputString.Substring(16);
+                        updatedString = Regex.Replace(updatedString, @"\u001d", ",");
+                        string[] output = updatedString.Split(',');
+
+                        foreach (var item in output)
+                        {
+                            if (item.StartsWith("21"))
+                            {
+                                serialNumber = item.Substring(2);
+                            }
+                            if (item.StartsWith("10"))
+                            {
+                                lotNumber = item.Substring(2);
+                            }
+                        }  
+                       
+                    }
                     if (value.StartsWith("21"))
                     {
                         int indexlotNumber = startindex17 - 2;
                         if (lotNumber == null)
                         {
                             indexlotNumber = value.IndexOf("10", 2, startindex17);
-                            lotNumber = value.Substring(indexlotNumber+2, startindex17 - indexlotNumber-2);
+                            lotNumber = value.Substring(indexlotNumber + 2, startindex17 - indexlotNumber - 2);
                             indexlotNumber = indexlotNumber - 2;
                         }
-                        serialNumber = value.Substring(2, indexlotNumber);
+                        if (serialNumber == null)
+                            serialNumber = value.Substring(2, indexlotNumber);
                     }
                     else if (value.StartsWith("10"))
                     {
@@ -214,36 +237,42 @@ namespace DataDecommision
                         if (serialNumber == null)
                         {
                             indexSerialNumber = value.IndexOf("21", 2, startindex17);
-                            serialNumber = value.Substring(indexSerialNumber + 2, startindex17 - indexSerialNumber-2);
+                            serialNumber = value.Substring(indexSerialNumber + 2, startindex17 - indexSerialNumber - 2);
                             indexSerialNumber = indexSerialNumber - 2;
                         }
-                        lotNumber = value.Substring(2, indexSerialNumber);
-                        
+                        if (lotNumber == null)
+                            lotNumber = value.Substring(2, indexSerialNumber);
+
                     }
 
                 }
 
-                if (startindex17 == 0)
+                if (value.StartsWith("17")) ///scenario 03,17, 21,10  or 03,17, 10,21
                 {
-                    if (length >= startindex17 + 8)
-                    {
-                        if (value.StartsWith("17"))
-                        {
-                            expirationDate = value.Substring(2, 6);
-                        }
-                    }
                     if (length > startindex17 + 10)
                     {
-                        if (value.Substring(startindex17 + 8, 2) == "21")
+
+                        expirationDate = value.Substring(2, 6);
+                        string[] escapeSequences = { "\\u001d" };
+                        string updatedString = inputString.Substring(24);
+                        updatedString = Regex.Replace(updatedString, @"\u001d", ",");
+                        string[] output = updatedString.Split(',');
+
+                        foreach (var item in output)
                         {
-                            serialNumber = value.Substring(startindex17 + 10);
+                            if (item.StartsWith("21"))
+                            {
+                                serialNumber = item.Substring(2);
+                            }
+                            if (item.StartsWith("10"))
+                            {
+                                lotNumber = item.Substring(2);
+                            }
                         }
-                        else if (value.Substring(startindex17 + 8, 2) == "10")
-                        {
-                            lotNumber = value.Substring(startindex17 + 10);
-                        }
+
                     }
                 }
+
             }
             catch (Exception)
             {
