@@ -41,7 +41,7 @@ namespace DataDecommision
                 for (int i = 0; i < 30; i++)
                 {
                     Thread.Sleep(1000);
-                    if (scantext != "" && scantext.Length > 25)
+                    if (scantext != "" && scantext.Length > 32)
                     {
                         scannerPort.Close();
                         return DecodeString(scantext);
@@ -274,9 +274,9 @@ namespace DataDecommision
                 }
 
             }
-            catch (Exception)
+            catch
             {
-                MessageBox.Show("Error in Decode.\nInput String : " + inputString, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show("Error in Decode.\nInput String : " + inputString, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             return (gtin, lotNumber, expirationDate, serialNumber);
         }
@@ -303,6 +303,13 @@ namespace DataDecommision
 
             if (lstSD.Count() == Convert.ToInt32(ScanDisplayVM.Instance.TextTotalBottle))
                 return;
+
+            if (sd.Expdate != DecomData.BulkExp || sd.LotNumber != DecomData.BulkLot || sd.GTIN != DecomData.BulkGtin)
+            {
+                return;
+            }
+
+
             if (!lstSD.Contains(sd))
                 lstSD.Add(sd);
             DispatchService.Invoke(() =>
@@ -324,7 +331,7 @@ namespace DataDecommision
             scannerPort.Read(buffer, 0, buffer.Length);
             string data = Encoding.ASCII.GetString(buffer);
             scantext += data;
-            if (scantext.Length > 25)
+            if (scantext.Length > 32)
             {
                 Thread.Sleep(2);
 
@@ -350,16 +357,16 @@ namespace DataDecommision
                 receivedStringContinous = "";
                 ContinousDecodeString(input);
             }
-            else if (!receivedStringContinous.StartsWith("\u0002") && receivedStringContinous.Length > 25)
+            else if (!receivedStringContinous.StartsWith("\u0002") && receivedStringContinous.Length > 32)
             {
-                Thread.Sleep(2);
+                //Thread.Sleep(2);
                 string input = receivedStringContinous;
                 receivedStringContinous = "";
                 ContinousDecodeString(input);
             }
             else
             {
-                Thread.Sleep(2);
+                Thread.Sleep(1);
             }
 
 
@@ -384,16 +391,16 @@ namespace DataDecommision
                 receivedStringCheck = "";
                 ContinousCheckString(input);
             }
-            else if (!receivedStringCheck.StartsWith("\u0002") && receivedStringCheck.Length > 25)
+            else if (!receivedStringCheck.StartsWith("\u0002") && receivedStringCheck.Length > 32)
             {
-                Thread.Sleep(2);
+                //Thread.Sleep(2);
                 string input = receivedStringCheck;
                 receivedStringCheck = "";
                 ContinousCheckString(input);
             }
             else
             {
-                Thread.Sleep(2);
+                Thread.Sleep(1);
             }
 
         }
