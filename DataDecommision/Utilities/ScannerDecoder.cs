@@ -43,7 +43,7 @@ namespace DataDecommision
                     Thread.Sleep(1000);
                     if (scantext != "" && scantext.Length > 32)
                     {
-                        scannerPort.Close();
+                        //scannerPort.Close();
                         return DecodeString(scantext);
 
                     }
@@ -55,13 +55,33 @@ namespace DataDecommision
         }
 
 
-
+        private static SerialPort SerialClose = null;
         /// <summary>
         /// Open all the serial ports and register the event
         /// </summary>
         /// <returns></returns>
         public static SerialPort FindBarcodeScanner(string port, int type = 0)
         {
+            if (SerialClose != null)
+            {
+                if (type == 1)
+                {
+                    SerialClose.DataReceived -= OnDataReceivedConti;
+
+                }
+                else if (type == 2)
+                {
+                    SerialClose.DataReceived -= OnDataReceivedCheckConti;
+                }
+                else
+                {
+                    SerialClose.DataReceived -= OnDataReceived1;
+                }
+
+
+                SerialClose.Close();
+            }
+
             // get a list of all available serial ports
             List<string> portNames = new List<string>
             {
@@ -69,7 +89,6 @@ namespace DataDecommision
             };
 
             SerialPort scannerPort = null;
-            ;
             // configure the serial port settings for the scanner
 
             if (portNames.Count() >= 1)
@@ -80,6 +99,7 @@ namespace DataDecommision
                 try
                 {
                     scannerPort.Open();
+                    SerialClose = scannerPort;
                     if (type == 1)
                     {
                         //Thread thread = new Thread(() =>
