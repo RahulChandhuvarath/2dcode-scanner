@@ -76,6 +76,7 @@ namespace DataDecommision
                 else
                 {
                     SerialClose.DataReceived -= OnDataReceived1;
+                    //SerialClose.Close();
                 }
 
 

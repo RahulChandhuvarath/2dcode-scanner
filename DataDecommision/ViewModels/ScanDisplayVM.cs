@@ -340,7 +340,7 @@ namespace DataDecommision
             IsScanGridVisible = true;
             IsAddGridVisible = false;
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1); // set the timer interval to 30 seconds
+            _timer.Interval = TimeSpan.FromSeconds(5); // set the timer interval to 30 seconds
             _timer.Tick += Timer_Tick;
             _timer.Start();
 
