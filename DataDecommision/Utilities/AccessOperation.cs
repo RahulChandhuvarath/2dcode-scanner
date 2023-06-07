@@ -59,6 +59,7 @@ namespace DataDecommision
                         for (int i = 0; i < scanData.Count; i++)
                         {
                             insertDataCommand.Parameters.Clear();
+                            //insertDataCommand.Parameters.AddWithValue("SR_NO", AutoNumner);
                             insertDataCommand.Parameters.AddWithValue("USER", userName);
                             insertDataCommand.Parameters.AddWithValue("START_DATE_TIME",DecomData.StartDateTime);
                             insertDataCommand.Parameters.AddWithValue("END_DATE_TIME", formattedTime);
