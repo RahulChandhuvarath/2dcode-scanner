@@ -107,9 +107,10 @@ namespace DataDecommision
         public void ButtonCheck()
         {
             ScanStart = true;
+            ScannerDecoder.serialportOpen = true;
             ButtonBackgroundColor = Brushes.MidnightBlue;
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(0.4); // set the timer interval to 30 seconds
+            _timer.Interval = TimeSpan.FromSeconds(5); // set the timer interval to 5 milliseconds
             _timer.Tick += Timer_Tick;
             _timer.Start();
         }
@@ -126,8 +127,11 @@ namespace DataDecommision
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if(ScanStart)
-                ScannerDecoder.FindBarcodeScanner(ScannerDecoder.userSelectedPort, 2);
+            if (ScanStart)
+            {
+                if(ScannerDecoder.serialportOpen)
+                    ScannerDecoder.FindBarcodeScanner(ScannerDecoder.userSelectedPort, 2);
+            }
 
         }
     }

@@ -334,13 +334,13 @@ namespace DataDecommision
         private DispatcherTimer _timer;
         public void ButtonScan()
         {
-
+            ScannerDecoder.serialportOpen = true;
             ButtonBackgroundColor = Brushes.MidnightBlue;
             IsDisplayGridVisible = false;
             IsScanGridVisible = true;
             IsAddGridVisible = false;
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(5); // set the timer interval to 30 seconds
+            _timer.Interval = TimeSpan.FromSeconds(1); // set the timer interval to 30 seconds
             _timer.Tick += Timer_Tick;
             _timer.Start();
 
@@ -588,8 +588,11 @@ namespace DataDecommision
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if(TextTotalBottle != scannedBottleCount)
-                ScannerDecoder.FindBarcodeScanner(ScannerDecoder.userSelectedPort, 1);
+            if (TextTotalBottle != scannedBottleCount)
+            {
+                if (ScannerDecoder.serialportOpen)
+                    ScannerDecoder.FindBarcodeScanner(ScannerDecoder.userSelectedPort, 1);
+            }
             if (TextTotalBottle == scannedBottleCount)
                 ButtonBackgroundColor = Brushes.DarkGreen;
         }

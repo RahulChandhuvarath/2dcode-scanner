@@ -54,7 +54,7 @@ namespace DataDecommision
             return ("", "", "", "");
         }
 
-
+        public static bool serialportOpen = false;
         private static SerialPort SerialClose = null;
         /// <summary>
         /// Open all the serial ports and register the event
@@ -67,16 +67,17 @@ namespace DataDecommision
                 if (type == 1)
                 {
                     SerialClose.DataReceived -= OnDataReceivedConti;
-
+                    receivedStringContinous = "";
+                    serialportOpen = false;
                 }
                 else if (type == 2)
                 {
                     SerialClose.DataReceived -= OnDataReceivedCheckConti;
+                    serialportOpen = false;
                 }
                 else
                 {
                     SerialClose.DataReceived -= OnDataReceived1;
-                    //SerialClose.Close();
                 }
 
 
@@ -374,16 +375,18 @@ namespace DataDecommision
 
             if (receivedStringContinous.StartsWith("\u0002") && receivedStringContinous.Contains("\u0003"))
             {
-                string input = receivedStringContinous;
+                string input = receivedStringContinous.Split('\u0003')[0];
                 receivedStringContinous = "";
                 ContinousDecodeString(input);
+                serialportOpen = true;
             }
-            else if (!receivedStringContinous.StartsWith("\u0002") && receivedStringContinous.Length > 32)
+            else if (receivedStringContinous.Contains("\u0003") || receivedStringContinous.Length > 32)
             {
                 //Thread.Sleep(2);
                 string input = receivedStringContinous;
                 receivedStringContinous = "";
                 ContinousDecodeString(input);
+                serialportOpen = true;
             }
             else
             {
@@ -411,6 +414,7 @@ namespace DataDecommision
                 string input = receivedStringCheck;
                 receivedStringCheck = "";
                 ContinousCheckString(input);
+                serialportOpen = true;
             }
             else if (!receivedStringCheck.StartsWith("\u0002") && receivedStringCheck.Length > 32)
             {
@@ -418,6 +422,7 @@ namespace DataDecommision
                 string input = receivedStringCheck;
                 receivedStringCheck = "";
                 ContinousCheckString(input);
+                serialportOpen = true;
             }
             else
             {
