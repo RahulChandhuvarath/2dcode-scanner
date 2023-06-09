@@ -19,7 +19,7 @@ namespace DataDecommision
             {
                 string userName = DecomData.UserName;
                 string formattedTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                
+
                 string fileName = $"Decom_ScanData.accdb";
                 string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), fileName);
 
@@ -59,24 +59,56 @@ namespace DataDecommision
                         for (int i = 0; i < scanData.Count; i++)
                         {
                             insertDataCommand.Parameters.Clear();
-                            //insertDataCommand.Parameters.AddWithValue("SR_NO", AutoNumner);
                             insertDataCommand.Parameters.AddWithValue("USER", userName);
-                            insertDataCommand.Parameters.AddWithValue("START_DATE_TIME",DecomData.StartDateTime);
+                            insertDataCommand.Parameters.AddWithValue("START_DATE_TIME", DecomData.StartDateTime);
                             insertDataCommand.Parameters.AddWithValue("END_DATE_TIME", formattedTime);
                             insertDataCommand.Parameters.AddWithValue("SCAN_STRING", scanData[i]);
                             insertDataCommand.ExecuteNonQuery();
                         }
-                       
+
                     }
 
                     connection.Close();
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
 
             }
 
         }
+
+        public static void CreateCSV()
+        {
+            try
+            {
+                string userName = DecomData.UserName;
+                string formattedTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                string fileName = "Decom_ScanData.csv";
+                string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), fileName);
+
+                bool fileExists = File.Exists(filePath);
+
+                using (StreamWriter writer = new StreamWriter(filePath, !fileExists))
+                {
+                    if (!fileExists)
+                    {
+                        // Write header row
+                        writer.WriteLine("USER,START_DATE_TIME,END_DATE_TIME,SCAN_STRING");
+                    }
+
+                    List<string> scanData = XMLCreation.GetScanData();
+
+                    // Write data rows
+                    foreach (string scan in scanData)
+                    {
+                        writer.WriteLine($"{userName},{DecomData.StartDateTime},{formattedTime},{scan}");
+                    }
+                }
+            }
+            catch { }
+        }
+
     }
 }

@@ -41,7 +41,7 @@ namespace DataDecommision
             }
             else
             {
-                AccessOperation.CreateDatabase();
+                AccessOperation.CreateCSV();
             }
         }
 
@@ -50,7 +50,7 @@ namespace DataDecommision
             // Your crash handling code here
             MessageBox.Show("Crashed due to unknown error", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
-            AccessOperation.CreateDatabase();
+            AccessOperation.CreateCSV();
             // Prevent the application from terminating
             e.Handled = false;
         }
