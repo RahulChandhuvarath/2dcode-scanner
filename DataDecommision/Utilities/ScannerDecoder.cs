@@ -378,6 +378,7 @@ namespace DataDecommision
                 string input = receivedStringContinous.Split('\u0003')[0];
                 receivedStringContinous = "";
                 ContinousDecodeString(input);
+                //Thread.Sleep(3);
                 serialportOpen = true;
             }
             else if (receivedStringContinous.Contains("\u0003") || receivedStringContinous.Length > 32)
@@ -386,11 +387,12 @@ namespace DataDecommision
                 string input = receivedStringContinous;
                 receivedStringContinous = "";
                 ContinousDecodeString(input);
+               // Thread.Sleep(3);
                 serialportOpen = true;
             }
             else
             {
-                Thread.Sleep(1);
+                Thread.Sleep(30);
             }
 
 
@@ -414,6 +416,7 @@ namespace DataDecommision
                 string input = receivedStringCheck;
                 receivedStringCheck = "";
                 ContinousCheckString(input);
+                Thread.Sleep(10);
                 serialportOpen = true;
             }
             else if (!receivedStringCheck.StartsWith("\u0002") && receivedStringCheck.Length > 32)
@@ -422,6 +425,7 @@ namespace DataDecommision
                 string input = receivedStringCheck;
                 receivedStringCheck = "";
                 ContinousCheckString(input);
+                Thread.Sleep(10);
                 serialportOpen = true;
             }
             else
