@@ -65,7 +65,9 @@ namespace DataDecommision
         public ButtonCommandBinding ButtonOtherClick { get; set; }
         private ScanDisplayVM()
         {
-            SelectedDate = null;
+            SelectedDate = DateTime.ParseExact(DecomData.BulkExp, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture); 
+            TextLot = DecomData.BulkLot;
+            TextGtin = DecomData.BulkGtin;
             ButtonBackgroundColor = Brushes.DarkGreen;
             IsTextReadonly = true;
             TextTotalBottle = DecomData.BulkBottle;
@@ -399,10 +401,9 @@ namespace DataDecommision
 
             ScanData sd = new ScanData(((DateTime)SelectedDate).ToString("yyyy-MM-dd"), TextLot, TextGtin, TextSerial);
             List<ScanData> lstSD = new List<ScanData>(ScanDisplayVM.Instance.LstScanData);
-            TextLot = "";
-            TextGtin = "";
+         
             TextSerial = "";
-            SelectedDate = null;
+
             if(sd.Expdate != DecomData.BulkExp)
             {
                 MessageBox.Show("Expiry Date Not Matching", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
