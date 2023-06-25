@@ -128,7 +128,7 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate >
                                             <Grid>
-                                                <TextBlock  Text="{Binding GTIN,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
+                                                <TextBlock  Text="{Binding GTIN,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" />
                                             </Grid>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -214,7 +214,7 @@
                     <Grid.LayoutTransform>
                         <ScaleTransform ScaleX="2" ScaleY="2" />
                     </Grid.LayoutTransform>
-                    <DatePicker x:Name="expdate" Grid.Column="1"  SelectedDateChanged="Expdate_SelectedDateChanged" SelectedDate="{Binding SelectedDate}"  HorizontalAlignment="Left"  Width="140" VerticalAlignment="Center"  FontSize="15" >
+                    <DatePicker x:Name="expdate" Grid.Column="1"  SelectedDateChanged="Expdate_SelectedDateChanged" SelectedDate="{Binding SelectedDate}"  HorizontalAlignment="Left"  Width="140" VerticalAlignment="Center"  FontSize="15" IsEnabled="False">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type DatePickerTextBox}">
                                 <Setter Property="Control.Template">
@@ -235,7 +235,7 @@
                     <ColumnDefinition Width="1.5*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="40,0,0,0" TextWrapping="Wrap" Text="Bulk LOT" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-                <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextLot}" PreviewTextInput="PreviewTextInput1"/>
+                <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextLot}" PreviewTextInput="PreviewTextInput1" IsReadOnly="True"/>
 
             </Grid>
             <Grid Grid.Row="3">
@@ -244,7 +244,7 @@
                     <ColumnDefinition Width="1.5*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" HorizontalAlignment="Left"  Margin="40,0,0,0" TextWrapping="Wrap" Text="GTIN" VerticalAlignment="Center"  FontSize="17"  Foreground="DarkBlue" />
-                <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}" PreviewTextInput="PreviewTextInput1"/>
+                <TextBox Grid.Column="1" HorizontalAlignment="Left"  Height="25" Width="250" VerticalAlignment="Center"  FontSize="15"  Foreground="Black" Text="{Binding TextGtin}" PreviewTextInput="PreviewTextInput1" IsReadOnly="True"/>
             </Grid>
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
