@@ -90,6 +90,14 @@ namespace DataDecommision
 
                 bool fileExists = File.Exists(filePath);
 
+                List<string> existingLines = new List<string>();
+                if (fileExists)
+                {
+                    existingLines = File.ReadAllLines(filePath).ToList();
+                }
+
+               
+
                 using (StreamWriter writer = new StreamWriter(filePath, !fileExists))
                 {
                     if (!fileExists)
@@ -97,7 +105,10 @@ namespace DataDecommision
                         // Write header row
                         writer.WriteLine("USER,START_DATE_TIME,END_DATE_TIME,SCAN_STRING");
                     }
-
+                    foreach (string line in existingLines)
+                    {
+                        writer.WriteLine(line);
+                    }
                     List<string> scanData = XMLCreation.GetScanData();
 
                     // Write data rows
