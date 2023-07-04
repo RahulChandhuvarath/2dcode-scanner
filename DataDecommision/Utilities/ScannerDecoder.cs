@@ -17,6 +17,7 @@ using System.Windows.Markup;
 using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Media;
+using System.Globalization;
 
 namespace DataDecommision
 {
@@ -184,10 +185,13 @@ namespace DataDecommision
                             if (length > startindex17 + 10)
                             {
                                 string temp = value.Substring(startindex17 + 8, 2);
-                                if (temp == "21" || temp == "10")
+                                if ((value.StartsWith("21") && temp == "10") || (value.StartsWith("10") && temp == "21"))
                                 {
+
                                     expirationDate = value.Substring(startindex17 + 2, 6);
-                                    break;
+                                    if (DateTime.TryParseExact(20 + expirationDate, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dtTemp))
+                                        break;
+
                                 }
                             }
                             else if (length >= startindex17 + 8)
